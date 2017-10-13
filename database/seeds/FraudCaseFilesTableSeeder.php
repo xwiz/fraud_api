@@ -14,7 +14,7 @@ class FraudCaseFilesTableSeeder extends BaseSeeder
     {
         $data = [];
         
-        DB::table('users')->truncate();
-        DB::table('users')->insert($data);
+        DB::table('fraud_case_files')->truncate();
+        DB::table('fraud_case_files')->insert($data);
     }
 }

@@ -23,10 +23,6 @@ $api = app('Dingo\Api\Routing\Router');
  // Controllers namespaces
  $controllers =[
      'user' => 'App\Api\Controllers\UserController',
-    //  'auth' => 'App\Api\V1\Controllers\AuthController',
-    //  'store' => 'App\Api\V1\Controllers\StoreController',
-    //  'merchant' => 'App\Api\V1\Controllers\MerchantController',
-    //  'product' => 'App\Api\V1\Controllers\ProductController',
     ];
 
 

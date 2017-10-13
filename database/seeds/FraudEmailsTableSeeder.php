@@ -16,15 +16,13 @@ class FraudEmailsTableSeeder extends BaseSeeder
         [
             'id' => 1,
             'fraud_case_id' => 1,
-            'email' => 'fraudatweb@hotmail.com',
-            'bank_id' => 2
+            'email' => 'fraudatweb@hotmail.com'
         ];
         $data[] = 
         [
             'id' => 2,
             'fraud_case_id' => 2,
-            'email' => 'scammed@yahoo.com',
-            'bank_id' => 8
+            'email' => 'scammed@yahoo.com'
         ];
         $this->truncateAndInsert('fraud_emails', $data);
     }

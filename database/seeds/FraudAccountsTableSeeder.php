@@ -40,5 +40,6 @@ class FraudAccountsTableSeeder extends BaseSeeder
             'account_name' => 'Barry Moore',
             'fraud_case_id' => 3
         ];
+        $this->truncateAndInsert('fraud_accounts', $data);
     }
 }

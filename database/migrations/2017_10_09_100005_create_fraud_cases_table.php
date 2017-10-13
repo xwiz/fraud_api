@@ -24,7 +24,7 @@ class CreateFraudCasesTable extends Migration
             $table->string('scammer_name');
             $table->string('scammer_real_name')->nullable();
             $table->integer('item_type_id')->unsigned();
-            $table->string('item_name', 150);
+            $table->string('item_name', 150)->nullable();
             $table->timestamps();
 
 

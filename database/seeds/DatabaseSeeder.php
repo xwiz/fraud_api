@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(UsersTableSeeder::class);
-        $this->call(FraudCategoriesTableSeeder::class);
+        $this->call(FraudCategoryTableSeeder::class);
         $this->call(ItemTypesTableSeeder::class);
         $this->call(BanksTableSeeder::class);
-        $this->call(SeveritiesTableSeeder::class);
+        $this->call(SeverityTableSeeder::class);
         $this->call(FraudCasesTableSeeder::class);
         $this->call(FraduEmailsTableSeeder::class);
         $this->call(FraudWebsitesTableSeeder::class);

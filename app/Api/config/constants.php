@@ -4,7 +4,7 @@
  */
 return [
     //in minutes, 1 hour
-    'API_TOKEN_EXPIRY_VALUE' => 60,
+    //'API_TOKEN_EXPIRY_VALUE' => 60,
     'severity' => [
         'low' => 1,
         'average' => 2,
@@ -20,5 +20,5 @@ return [
         'fake_undelivered_product_service_offerings' => 3,
         'phising_websites' => 4,
         'yahoo_yahoo_scam' => 5,
-    ],
+    ]
 ];
