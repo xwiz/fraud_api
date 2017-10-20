@@ -12,9 +12,14 @@ class FraudWebsite extends BaseModel
     */
     protected $fillable = ['fraud_case_id', 'website_url','bank_id'];
 
+    public $rules = [
+        'create' => [],
+        'update' => [],
+    ];
+
     public function fraudCases()
     {
-        return $this->hasMany('\App\Api\Models\FraudCase');
+        return $this->belongsToMany('\App\Api\Models\FraudCase');
     }
     
 }

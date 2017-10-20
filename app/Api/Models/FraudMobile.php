@@ -12,6 +12,14 @@ class FraudMobile extends BaseModel
     */
     protected $fillable = ['fraud_case_id', 'phone_number'];
 
+    public $rules = [
+        'create' => [
+            'phone_number' => 'min:11|max:15',
+        ],
+        'update' => [],
+    ];
+
+
     public function fraudCases()
     {
         return $this->belongsToMany('\App\Api\Models\FraudCase');

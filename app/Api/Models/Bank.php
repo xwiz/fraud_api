@@ -12,11 +12,10 @@ class Bank extends BaseModel
     */
     protected $fillable = ['name'];
 
-    //banks has many accounts
+    //Banks has many Accounts
     public function fraudAccounts()
     {
-        return $this->hasMany('\App\Api\Models\FraudAccount');
-        
+        return $this->hasMany('\App\Api\Models\FraudAccount');   
     }
     
 }

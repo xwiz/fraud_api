@@ -12,6 +12,15 @@ class FraudAccount extends BaseModel
     */
     protected $fillable = ['account_no', 'bank_id', 'account_name', 'fraud_case_id'];
 
+    public $rules = [
+        'create' => [
+            'account_no' => 'min:10|max:10',
+            'account_name' => 'max:50',
+        ],
+        'update' => [],
+    ];
+
+
     public function bank()
         {
             return $this->belongsTo('\App\Api\Models\Bank');

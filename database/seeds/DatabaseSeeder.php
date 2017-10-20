@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BanksTableSeeder::class);
         $this->call(SeverityTableSeeder::class);
         $this->call(FraudCasesTableSeeder::class);
-        $this->call(FraduEmailsTableSeeder::class);
+        $this->call(FraudEmailsTableSeeder::class);
         $this->call(FraudWebsitesTableSeeder::class);
         $this->call(FraudMobilesTableSeeder::class);
         $this->call(FraudAccountsTableSeeder::class);

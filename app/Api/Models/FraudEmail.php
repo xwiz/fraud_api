@@ -12,8 +12,16 @@ class FraudEmail extends BaseModel
     */
     protected $fillable = ['fraud_case_id', 'email'];
 
+    public $rules = [
+        'create' => [
+            'email' => 'string|email|max:50',
+        ],
+        'update' => [],
+    ];
+
+
      public function fraudCases()
     {
-        return $this->hasMany('\App\Api\Models\FraudCase');
+        return $this->belongsToMany('\App\Api\Models\FraudCase');
     }
 }

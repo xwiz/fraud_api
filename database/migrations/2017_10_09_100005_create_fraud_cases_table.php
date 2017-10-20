@@ -19,7 +19,7 @@ class CreateFraudCasesTable extends Migration
             $table->dateTime('scam_start_date')->nullable();
             $table->dateTime('scam_realization_date')->nullable();
             $table->integer('severity_id')->unsigned();
-            $table->decimal('amount_scammed_off', 8, 2)->unsigned();
+            $table->double('amount_scammed_off', 10, 2)->unsigned();
             $table->integer('fraud_category_id')->unsigned()->index();
             $table->string('scammer_name');
             $table->string('scammer_real_name')->nullable();

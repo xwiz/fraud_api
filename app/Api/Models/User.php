@@ -5,7 +5,7 @@ namespace App\Api\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends BaseModel
 {
     use Notifiable;
 
@@ -15,7 +15,6 @@ class User extends Authenticatable
     * @var string
     */
     protected $table = 'users';
-
 
     /**
      * The attributes that are mass assignable.
@@ -37,16 +36,18 @@ class User extends Authenticatable
 
     public $rules = [
         'create' => [
-            'first_name' => 'min:3',
-            'last_name' => 'min:3',
+            'first_name' => 'min:3|required',
+            'last_name' => 'min:3|required',
             'email' => 'email|unique:users,email|required',
-            'password'=>'min:5|confirmed|required',
+            'password'=>'min:5',
             'phone_number' => 'min:11|max:15|unique:users',
         ],
         'update' => [
             'first_name' => 'min:3',
             'last_name' => 'min:3',
+            'password'=>'min:5',
             'phone_number' => 'min:11|max:15|unique:users',
+            'email' => 'email|unique:users,email|required',
         ],
     ];
 

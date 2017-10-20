@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Bind model transformers
+        require __DIR__ . '/../Api/transformers.php';
     }
 
     /**
