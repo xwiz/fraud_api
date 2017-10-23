@@ -233,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
 
+        'API' => Dingo\Api\Facade\API::class,
         'JWTAuth'=> Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class,
     ],

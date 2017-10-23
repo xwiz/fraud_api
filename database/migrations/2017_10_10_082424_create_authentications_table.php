@@ -17,7 +17,7 @@ class CreateAuthenticationsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-			$table->char('token', 64)->index();
+			$table->text('token');
 			$table->timestamp('expiry');
             $table->timestamps();
         });

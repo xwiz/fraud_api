@@ -10,30 +10,53 @@ use App\Http\Controllers\Controller;
 use Tymon\JwTAuth\Exceptions\JWTException;
 use App\Api\Transformers\UserTransformer;
 use Dingo\Api\Routing\Helpers;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class AuthController extends Controller
 {
     use Helpers;
 
-    private $model;
-
+    /**
+     * Authentication model instance
+     *
+     * @var Authentication
+    */
+    private $authenticationModel;
 
     /**
-     * API Login, on successreturn JWT Auth token
+     * User model instance
      *
-     * @throws Exception
-     *
-     * @return \JsonResponse
-     */
+     * @var User
+    */
+    private $userModel;
+
+
+    public function __construct(User $userModel, Authentication $authenticationModel)
+    {
+        $this->userModel = $userModel;
+        $this->authenticationModel = $authenticationModel;
+
+    }
+
     public function authenticate(Request $request)
     {
-        //grab credentials from the request
-        $credentials = $request->only('email', 'password');
-
         try
         {
-            // attempt to verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) 
+
+            $credentials = $request->only('email', 'password');
+            $email = $credentials['email'];
+            $user = $this->userModel->where(['email' => $email])->first(); 
+
+            if($user == null)
+            {
+                return response()->json(['error' => 'User does not exist.']);
+            }
+
+            if (!$token = JWTAuth::attempt($credentials)) 
             {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
@@ -44,8 +67,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
+        //token generated, store it in the database
+        $this->authenticationModel->store($user->id, $token);
+
         // all good so return the token
-       return response()->json(compact('token'));
+        return response()->json(compact('token'));
     }
 
 

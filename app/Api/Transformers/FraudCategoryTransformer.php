@@ -5,11 +5,11 @@ namespace App\Api\Transformers;
 use League\Fractal\TransformerAbstract;
 use App\Api\Models\Bank;
 
-class BankTransformer extends BaseTransformer
+class FraudCategoryTransformer extends BaseTransformer
 {
 
-   public function includeUser($model)
+   public function includeFraudCategory($model)
     {
-        return $this->item($model->Bank, new BankTransformer);
+        return $this->item($model->FraudCategory, new FraudCategoryTransformer);
     }
 }

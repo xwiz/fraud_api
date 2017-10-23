@@ -15,7 +15,12 @@ class Bank extends BaseModel
     //Banks has many Accounts
     public function fraudAccounts()
     {
-        return $this->hasMany('\App\Api\Models\FraudAccount');   
+    	return $this->hasMany('\App\Api\Models\FraudAccount');   
     }
     
+    //todo
+    // public function fraudWebsite()
+    // {
+    // return $this->
+    // }
 }

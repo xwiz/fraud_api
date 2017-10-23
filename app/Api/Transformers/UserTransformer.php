@@ -2,39 +2,21 @@
 
 namespace App\Api\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Api\Models\User;
 
 class UserTransformer extends BaseTransformer
 {
+    public $availableIncludes = ['fraudCases'];
+    public $defaultIncludes = ['fraudCases'];
 
-   public function includeUser($model)
+
+    /**
+    * Include user data and transform it
+    * @param BaseModel $model
+    * @return \League\Fractal\Resource\Item
+    */
+    public function includeFraudCases(User $model)
     {
-        return $this->item($model->User, new UserTransformer);
+        return $this->collection($model->fraudCases, new FraudCaseTransformer);
     }
-    // public $availableIncludes = [];
-
-    // public $defaultIncludes = [];
-
-  
-
-    //     /**
-    //  * Include user data and transform it
-    //  * @param BaseModel $model
-    //  * @return \League\Fractal\Resource\Item
-    //  */
-    // public function includeMerchant($model)
-    // {
-    //     return $this->Item($model->merchant, new MerchantTransformer());
-    // }
-
-    // public function includeState($model)
-    // {
-    //     return $this->Item($model->state, new StateTransformer());
-    // }
-    // public function includeFavouritestore($model)
-    // {
-    //     return $this->collection($model->favouritestore, new StoreTransformer());
-    // }
-       
 }

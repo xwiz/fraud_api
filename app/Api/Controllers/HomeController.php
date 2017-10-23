@@ -13,12 +13,28 @@ use App\Api\Transformers\BankTransformer;
 use App\Api\Transformers\SeverityTransformer;
 use App\Api\Transformers\ItemTypeTransformer;
 use App\Api\Transformers\FraudCategoryTransformer;
+use App\Api\Transformers\FraudCaseTransformer;
 
 
 
 class HomeController extends Controller
 {
     use Helpers;
+
+
+    /**
+     * Fraud Case model instance
+     *
+     * @var FraudCase
+     */
+    private $fraudCase;
+
+    /**
+     * Item Type model instance
+     *
+     * @var ItemType
+     */
+    private $itemType;
 
     /** 
     * Gets the specified resource in storage.

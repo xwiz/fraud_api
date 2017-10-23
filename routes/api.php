@@ -22,12 +22,12 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
  // Controllers namespaces
- $controllers =[
-     'auth' => 'App\Api\Controllers\AuthController',
-     'user' => 'App\Api\Controllers\UserController',
-     'fraud' => 'App\Api\Controllers\FraudController',
-     'home' => 'App\Api\Controllers\HomeController',
-    ];
+$controllers =[
+'auth' => 'App\Api\Controllers\AuthController',
+'user' => 'App\Api\Controllers\UserController',
+'fraud' => 'App\Api\Controllers\FraudController',
+'home' => 'App\Api\Controllers\HomeController',
+];
 
 
 /*
@@ -45,37 +45,43 @@ $api->version('v1', function ($api) use($controllers){
 
 //prefix is api/v1
     $api->group(['prefix' => 'v1', 'middleware' => 'cors'], function ($api) use ($controllers){
-       
-            $api->post('register', [ 'uses' => $controllers['user'].'@storeUser']);
-            $api->post('authenticate', [ 'uses' => $controllers['auth'].'@authenticate']);
-            $api->get('user', ['uses'=> $controllers['user'].'@index']);
-            $api->get('users', ['uses'=> $controllers['user'].'@getUsers']);
-            $api->get('edit/users', ['uses'=> $controllers['user'].'@getUsers']);
-            $api->post('edit/{id}', ['uses' =>  $controllers['user'] .'@updateUser']);
-           
-            $api->delete('/delete/{id}', [ 'uses' =>  $controllers['user'] .'@destroyUser']); 
-           
-            $api->post('fraud/case', [ 'uses' => $controllers['fraud'].'@storeFraud']);
 
-            
-            $api->get('me', ['uses'=> $controllers['user'].'@me']);
-            
-            $api->delete('/deletecase/{id}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
-            
-            $api->get('banks', [ 'uses' => $controllers['home'].'@getBanks']);
-            $api->get('severities', [ 'uses' => $controllers['home'].'@getSeverities']);
-            $api->get('itemtypes', [ 'uses' => $controllers['home'].'@getItemTypes']);
-            $api->get('fraud/categories', [ 'uses' => $controllers['home'].'@getFraudCategories']);
+        $api->post('register', [ 'uses' => $controllers['user'].'@storeUser']);
+        $api->post('authenticate', [ 'uses' => $controllers['auth'].'@authenticate']);
+
+        $api->get('user', ['uses'=> $controllers['user'].'@index']);
+
+        
+        $api->post('edit/{id}', ['uses' =>  $controllers['user'] .'@updateUser']);
+        
+        $api->post('update/{id}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
 
 
-    });
+        $api->delete('/delete/{id}', [ 'uses' =>  $controllers['user'] .'@destroyUser']); 
+
+        $api->post('fraud/case', [ 'uses' => $controllers['fraud'].'@storeFraud']);
+
+        $api->delete('/deletecase/{id}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
+
+        $api->get('banks', [ 'uses' => $controllers['home'].'@getBanks']);
+        $api->get('severities', [ 'uses' => $controllers['home'].'@getSeverities']);
+        $api->get('itemtypes', [ 'uses' => $controllers['home'].'@getItemTypes']);
+        $api->get('fraud/categories', [ 'uses' => $controllers['home'].'@getFraudCategories']);
+    
+
+        $api->get('cases', [ 'uses' => $controllers['fraud'].'@showFrauds']);
+        
+
+        $api->post('search', [ 'uses' => $controllers['fraud'].'@searchCase']);
 
 
-    $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers){
-
-			$api->group(['prefix' => 'v1'], function($api) use ($controllers)
-			{
-				 $api->get('/me', ['as' => 'user.me', 'uses' =>  $controllers['user'] .'@authenticatedUser']);
+        $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)
+        {
+            $api->group(['prefix' => 'user'], function($api) use ($controllers)
+            {
+                $api->get('/me', ['uses' =>  $controllers['user'] .'@getAuthenticatedUser']);
+                $api->get('/mine', ['uses' =>  $controllers['user'] .'@me']);
             });
+        });
     });
 });

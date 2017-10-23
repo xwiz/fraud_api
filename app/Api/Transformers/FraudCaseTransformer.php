@@ -6,14 +6,13 @@ use App\Api\Models\FraudCase;
 
 class FraudCaseTransformer extends BaseTransformer
 {
-    public $availableIncludes = ['fraud_accounts', 'fraud_mobiles', 'fraud_emails', 'fraud_websites'];
-    public $defaultIncludes = ['fraud_emails', 'fraud_accounts', 'fraud_mobiles'];
+    public $availableIncludes = ['fraud_accounts', 'fraud_mobiles', 'fraud_emails', 'fraud_websites', 'user'];
+    public $defaultIncludes = ['fraudEmails', 'fraudAccounts', 'fraudWebsites','fraudMobiles'];
 
     public function includeFraudAccounts(FraudCase $model)
     {
         return $this->collection($model->fraudAccounts, new FraudAccountTransformer);
     }
-
     public function includeFraudEmails(FraudCase $model)
     {
         return $this->collection($model->fraudEmails, new FraudEmailTransformer);
@@ -24,8 +23,13 @@ class FraudCaseTransformer extends BaseTransformer
         return $this->collection($model->fraudMobiles, new FraudMobileTransformer);
     }
 
-    public function includeFraudWebsite(FraudCase $model)
+    public function includeFraudWebsites(FraudCase $model)
     {
-        return $this->collection($model->fraudWebsite, new FraudWebsiteTransformer);
+        return $this->collection($model->fraudWebsites, new FraudWebsiteTransformer);
     }
+    public function includeUser(FraudCase $model)
+    {
+        return $this->item($model->user, new UserTransformer);
+    }
+
 }

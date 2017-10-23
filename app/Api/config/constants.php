@@ -3,8 +3,7 @@
  * Returns application constants
  */
 return [
-    //in minutes, 1 hour
-    //'API_TOKEN_EXPIRY_VALUE' => 60,
+
     'severity' => [
         'low' => 1,
         'average' => 2,

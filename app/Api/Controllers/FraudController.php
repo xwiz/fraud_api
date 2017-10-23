@@ -74,21 +74,21 @@ class FraudController extends Controller
         $data = $request->except('_token');
 
         
-    if(!$this->fraudCaseModel->validate($data,'create'))
+        if(!$this->fraudCaseModel->validate($data,'create'))
         {
             throw new StoreResourceFailedException('Could not store fraud case. Errors: '. $this->fraudCaseModel->getErrorsInLine());
         }
-    
-        $this->fraudCaseModel->fill($data);
+
+        $this->fraudCaseModel->fill($data); 
         $this->fraudCaseModel->save();
         $data['fraud_case_id'] = $this->fraudCaseModel->id;
+
         
         if(isset($data['email']))
         {
             foreach($data['email'] as $email)
-        {
+            {
                 $email_data = ['email' => $email];
-            
 
                 if(!$this->fraudEmailModel->validate($email_data,'create'))
                 {
@@ -114,17 +114,27 @@ class FraudController extends Controller
             }
         }
         
-        if(!$this->fraudWebsiteModel->validate($data,'create'))
+        if(isset($data['website_url']))
         {
-            throw new StoreResourceFailedException('Could not create fraud case. Errors: '.  $this->fraudWebsiteModel->getErrorsInLine());
+            //todo: check of passed data is json
+            $websites = json_decode($data['website_url'], true);
+            foreach($websites as $website)
+            {
+                if(!$this->fraudWebsiteModel->validate($website, 'create'))
+                {
+                    throw new StoreResourceFailedException('Could not create fraud case website. Erros: '. $this->fraudWebsiteModel->getErrorsInLine());
+                }
+                $fraud_website = FraudWebsite::create($website + ['fraud_case_id' => $this->fraudCaseModel->id]);
+                $this->fraudCaseModel->fraudWebsites()->attach($fraud_website->id);
+            }
         }
 
         if(isset($data['phone_number']))
         {
             foreach($data['phone_number'] as $phone_no)
-        {
+            {
                 $phone_num = ['phone_number' => $phone_no];
-            
+
                 if(!$this->fraudMobileModel->validate($phone_num,'create'))
                 {
                     throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
@@ -136,30 +146,95 @@ class FraudController extends Controller
 
         return $this->fraudCaseModel;
     }
-
-
+    /*
+    * View all fraud Cases
+    * GET /cases
+    */
     public function showFrauds()
     {
+        return $fraudcases = FraudCase::all();
 
     }
 
-    //todo: this method isnt working yet, to fix
-    public function updateFraud(Request $request, $id)
+    public function updateFraud(Request $request, $id, FraudAccount $fraudAccount, FraudCase $fraudCase, FraudEmail $fraudEmail, FraudWebsite $fraudWebsite, FraudMobile $fraudMobile)
     {
+        $data = $request->all();
         $this->fraudCaseModel = $this->fraudCaseModel::find($id);
-        $data = $request->except('_token');
 
-        if(!$this->model->validate($data,$this->fraudcaseModel->rules,'update'))
+        
+        if(!$this->fraudCaseModel->validate($data,'create'))
         {
-        throw new StoreResourceFailedException('Could not edit user. Errors: '. $this->model->getErrors());
+            throw new StoreResourceFailedException('Could not store fraud case. Errors: '. $this->fraudCaseModel->getErrorsInLine());
         }
 
-        $this->model->fill($data);
-        $this->model->save();
-        return $this->model;
+        $this->fraudCaseModel->fill($data); 
+        $this->fraudCaseModel->save();
+        $data['fraud_case_id'] = $this->fraudCaseModel->id;
+
+        
+        if(isset($data['email']))
+        {
+            foreach($data['email'] as $email)
+            {
+                $email_data = ['email' => $email];
+
+                if(!$this->fraudEmailModel->validate($email_data,'create'))
+                {
+                    throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
+                }
+                $fraud_email = FraudEmail::create($email_data + ['fraud_case_id' => $this->fraudCaseModel->id]);
+                $this->fraudCaseModel->fraudEmails()->attach($fraud_email->id);
+            }
+        }
+
+        if(isset($data['account']))
+        {
+            //todo: checks if json is passed
+            $accounts = json_decode($data['account'], true);
+            foreach($accounts as $account)
+            {
+                if(!$this->fraudAccountModel->validate($account, 'create'))
+                {
+                    throw new StoreResourceFailedException('Could not create fraud case account. Errors: '.  $this->fraudAccountModel->getErrorsInLine());
+                }
+                $fraud_account = FraudAccount::create($account + ['fraud_case_id' => $this->fraudCaseModel->id]);
+                $this->fraudCaseModel->fraudAccounts()->attach($fraud_account->id);
+            }
+        }
+        
+        if(isset($data['website_url']))
+        {
+            //todo: check of passed data is json
+            $websites = json_decode($data['website_url'], true);
+            foreach($websites as $website)
+            {
+                if(!$this->fraudWebsiteModel->validate($website, 'create'))
+                {
+                    throw new StoreResourceFailedException('Could not create fraud case website. Erros: '. $this->fraudWebsiteModel->getErrorsInLine());
+                }
+                $fraud_website = FraudWebsite::create($website + ['fraud_case_id' => $this->fraudCaseModel->id]);
+                $this->fraudCaseModel->fraudWebsites()->attach($fraud_website->id);
+            }
+        }
+
+        if(isset($data['phone_number']))
+        {
+            foreach($data['phone_number'] as $phone_no)
+            {
+                $phone_num = ['phone_number' => $phone_no];
+
+                if(!$this->fraudMobileModel->validate($phone_num,'create'))
+                {
+                    throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
+                }
+                $fraud_mobile = FraudMobile::create($phone_num + ['fraud_case_id' => $this->fraudCaseModel->id]);
+                $this->fraudCaseModel->fraudMobiles()->attach($fraud_mobile->id);
+            }
+        }
+
+        return $this->fraudCaseModel;
     }
-
-
+    
     /**
     * Delete a fraud case
     */
@@ -169,12 +244,11 @@ class FraudController extends Controller
         return "Fraud Case ". $id ." Deleted Successfully";
     }
 
-
-
-    public function searchCase()
+    //todo: restructure the search method 
+    public function searchCase(Request $request)
     {
-
+        $keyword = $request->get('keyword');
+        return $results = FraudAccount::where('account_no', 'LIKE', $keyword)->get();
     }
-
 
 }

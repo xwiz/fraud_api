@@ -39,54 +39,54 @@ class FraudCase extends BaseModel
 
     public function user()
     {
-        return $this->belongsTo('\App\Api\Models\User');
+        return $this->belongsTo(User::class);
     }
 
 
     public function itemType()
     {
-        return $this->belongsTo('\App\Api\Models\ItemType');
+        return $this->belongsTo(ItemType::class);
     }
 
 
     public function fraudCategory()
     {
-        return $this->belongsTo('\App\Api\Models\FraudCategory');
+        return $this->belongsTo(FraudCategory::class);
     }
 
 
     public function severity()
     {
-        return $this->belongsTo('\App\Api\Models\Severity');
+        return $this->belongsTo(Severity::class);
     }
 
 
     public function fraudWebsites()
     {
-        return $this->belongsToMany('\App\Api\Models\FraudWebsite');
+        return $this->belongsToMany(FraudWebsite::class, 'fraudcase_fraudwebsite', 'fraud_case_id', 'fraud_website_id');
     }
 
 
     public function fraudCaseFiles()
     {
-        return $this->hasMany('\App\Api\Models\FraudCaseFile');
+        return $this->hasMany(FraudCaseFile::class);
     }
 
 
     public function fraudEmails()
     {
-        return $this->belongsToMany('\App\Api\Models\FraudEmail', 'fraudcase_fraudemail', 'fraud_case_id', 'fraud_email_id');
+        return $this->belongsToMany(FraudEmail::class, 'fraudcase_fraudemail', 'fraud_case_id', 'fraud_email_id');
     }
     
 
     public function fraudAccounts()
     {
-        return $this->belongsToMany('\App\Api\Models\FraudAccount', 'fraudaccount_fraudcase', 'fraud_case_id', 'fraud_account_id');
+        return $this->belongsToMany(FraudAccount::class, 'fraudaccount_fraudcase', 'fraud_case_id', 'fraud_account_id');
     }
 
 
     public function fraudMobiles()
     {
-        return $this->belongsToMany('\App\Api\Models\FraudMobile', 'fraudcase_fraudmobile', 'fraud_case_id', 'fraud_mobile_id');
+        return $this->belongsToMany(FraudMobile::class, 'fraudcase_fraudmobile', 'fraud_case_id', 'fraud_mobile_id');
     }
 }

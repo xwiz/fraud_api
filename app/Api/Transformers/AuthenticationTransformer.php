@@ -3,13 +3,13 @@
 namespace App\Api\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\Api\Models\Bank;
+use App\Api\Models\Authentication;
 
-class BankTransformer extends BaseTransformer
+class AuthenticationTransformer extends BaseTransformer
 {
 
-   public function includeUser($model)
+   public function includeAuthentication($model)
     {
-        return $this->item($model->Bank, new BankTransformer);
+        return $this->item($model->Authentication, new AuthenticationTransformer);
     }
 }

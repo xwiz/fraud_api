@@ -5,6 +5,8 @@ namespace App\Api\Models;
 use App\Api\Models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Api\Models\Authentication;
+use Illuminate\Support\Facades\Config;
 
 class Authentication extends BaseModel
 {
@@ -22,7 +24,8 @@ class Authentication extends BaseModel
 
         $authenticationData = array(
             'token' => $token,
-            'expiry' => Carbon::now()->addMinutes(60)
+            //expire in minutes, after 1 hour
+            'expiry' => Carbon::now()->addMinutes(61)
         );
 
         if ($authentication->count() > 0){

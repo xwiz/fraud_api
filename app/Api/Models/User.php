@@ -53,6 +53,6 @@ class User extends BaseModel
 
     public function fraudCases()
     {
-        return $this->hasMany('\App\Api\Models\FraudCase');
+        return $this->hasMany(FraudCase::class);
     }
 }
