@@ -6,7 +6,7 @@ use App\Api\Models\FraudCase;
 
 class FraudCaseTransformer extends BaseTransformer
 {
-    public $availableIncludes = ['fraud_accounts', 'fraud_mobiles', 'fraud_emails', 'fraud_websites', 'user'];
+    public $availableIncludes = ['fraudAccounts', 'fraudMobiles', 'fraudEmails', 'fraudWebsites', 'user'];
     public $defaultIncludes = ['fraudEmails', 'fraudAccounts', 'fraudWebsites','fraudMobiles'];
 
     public function includeFraudAccounts(FraudCase $model)

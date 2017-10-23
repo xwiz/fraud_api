@@ -15,8 +15,8 @@ class FraudCasesTableSeeder extends BaseSeeder
         $data[] = [
             'id' => 1,
             'user_id' => 1,
-            'scam_start_date' => date("Y-m-d H:i:s"),
-            'scam_realization_date' => date("Y-m-d H:i:s"),
+            'scam_start_date' => date("Y-m-d"),
+            'scam_realization_date' => date("Y-m-d"),
             'severity_id' => 1,
             'amount_scammed_off' => '50000.00',
             'fraud_category_id' => 5,

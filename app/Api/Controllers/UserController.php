@@ -140,4 +140,11 @@ class UserController extends Controller
         return "User ID ". $id ." Deleted Successfully";
     }
 
+
+    public function searchUser(Request $request)
+    {
+        $query = $request->get('keyword');
+        return $user = User::search($query)->get();
+        
+    }
 }

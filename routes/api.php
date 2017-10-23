@@ -72,7 +72,9 @@ $api->version('v1', function ($api) use($controllers){
         $api->get('cases', [ 'uses' => $controllers['fraud'].'@showFrauds']);
         
 
-        $api->post('search', [ 'uses' => $controllers['fraud'].'@searchCase']);
+        //$api->post('search', [ 'uses' => $controllers['fraud'].'@searchCase']);
+
+        $api->post('search', [ 'uses' => $controllers['user'].'@searchUser']);
 
 
         $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)

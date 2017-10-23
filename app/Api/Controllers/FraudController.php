@@ -247,8 +247,22 @@ class FraudController extends Controller
     //todo: restructure the search method 
     public function searchCase(Request $request)
     {
-        $keyword = $request->get('keyword');
-        return $results = FraudAccount::where('account_no', 'LIKE', $keyword)->get();
+        
+        $query = $request->get('keyword');
+        $cases = FraudCase::search($query)->get();
+        return $cases;
+
+
+
+        //dd($query);
+        //return FraudCase::search($request->get('scammer_name'))->get();
+        // $result = FraudCase::whereHas('fraudAccounts', function($query) use($keyword)
+        // {
+        //     $query->where('account_name', 'LIKE', '%' .$keyword. '%');
+        // })->orWhere('scammer_name', 'LIKE', '%' .$keyword. '%')->get();
+
+        //return $result;
+        // return $results = FraudAccount::where('account_no', 'LIKE', $keyword)->get();
     }
 
 }

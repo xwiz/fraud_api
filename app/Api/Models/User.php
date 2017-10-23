@@ -4,10 +4,24 @@ namespace App\Api\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Nicolaslopezj\Searchable\SearchableTrait;
+
 
 class User extends BaseModel
 {
     use Notifiable;
+    
+    use SearchableTrait;
+
+
+     protected $searchable = [
+        'columns' => [
+            'users.first_name' => 10,
+            'users.last_name' => 9,
+            'users.email' => 9,
+        ],
+    ];
+    /
 
     /**
     * The database table used by the model.

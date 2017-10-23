@@ -4,10 +4,31 @@ namespace App\Api\Models;
 
 use App\Api\Models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class FraudCase extends BaseModel
 {
 
+    use SearchableTrait;
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'fraud_accounts.account_no' => 10,
+            'fraud_accounts.account_name' => 9,
+            'fraud_cases.scammer_name' => 9,
+            'fraud_cases.scammer_real_name' => 9,
+        ],
+        'joins' => [
+            'fraud_accounts' => ['fraud_cases.id','fraud_accounts.fraud_case_id'],
+        ],
+    
+
+    ];
     /**
     * The database table used by the model.
     *
