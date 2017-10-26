@@ -61,6 +61,31 @@ Tokens are valid for 1 hour(60 minutes) from the time obtained.
 ### User Features
 Functionalities to create, delete, retrieve or modify user information through the API
 
+### Create New User
+
+	Endpoint : 					/users
+	Http method :				post
+
+	Body : 
+		first_name:				string
+		last_name:				string
+		email:					string
+		password:				string
+		phone_number:			string
+
+	Response
+		Successful
+			Http code:	200
+			[
+				{user}
+			]
+		Error
+			Http code: 422
+				[
+					message : Could not create User. Errors...
+				]
+
+
 ### Retrieve User Information
 	
 	Endpoint :		/users/me

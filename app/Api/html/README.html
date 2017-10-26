@@ -19,6 +19,7 @@
 <li><a href="#authentication">Authentication</a><ul>
 <li><a href="#basic-authentication">Basic Authentication</a></li>
 <li><a href="#user-features">User Features</a></li>
+<li><a href="#create-new-user">Create New User</a></li>
 <li><a href="#retrieve-user-information">Retrieve User Information</a></li>
 <li><a href="#update-user-information">Update User Information</a></li>
 <li><a href="#delete-user-information">Delete User Information</a></li>
@@ -84,6 +85,28 @@ Response
         ]</code></pre>
 <h3 id="user-features">User Features</h3>
 <p>Functionalities to create, delete, retrieve or modify user information through the API</p>
+<h3 id="create-new-user">Create New User</h3>
+<pre><code>Endpoint :                  /users
+Http method :               post
+
+Body : 
+    first_name:             string
+    last_name:              string
+    email:                  string
+    password:               string
+    phone_number:           string
+
+Response
+    Successful
+        Http code:  200
+        [
+            {user}
+        ]
+    Error
+        Http code: 422
+            [
+                message : Could not create User. Errors...
+            ]</code></pre>
 <h3 id="retrieve-user-information">Retrieve User Information</h3>
 <pre><code>Endpoint :      /users/me
 Http method :   get
