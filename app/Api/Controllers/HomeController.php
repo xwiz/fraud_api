@@ -2,18 +2,18 @@
 
 namespace App\Api\Controllers;
 
-use Dingo\Api\Routing\Helpers;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Api\Models\Bank;
 use App\Api\Models\Severity;
 use App\Api\Models\ItemType;
+use Illuminate\Http\Request;
+use Dingo\Api\Routing\Helpers;
 use App\Api\Models\FraudCategory;
+use App\Http\Controllers\Controller;
 use App\Api\Transformers\BankTransformer;
 use App\Api\Transformers\SeverityTransformer;
 use App\Api\Transformers\ItemTypeTransformer;
-use App\Api\Transformers\FraudCategoryTransformer;
 use App\Api\Transformers\FraudCaseTransformer;
+use App\Api\Transformers\FraudCategoryTransformer;
 
 
 
@@ -38,7 +38,7 @@ class HomeController extends Controller
 
     /** 
     * Gets the specified resource in storage.
-    * GET banks
+    * GET /banks
     *
     * param Api\Models\Bank $bank
     * @return Response
@@ -50,7 +50,7 @@ class HomeController extends Controller
 
     /** 
     * Gets the specified resource in storage.
-    * GET Severities
+    * GET /severities
     *
     * param Api\Models\Severity $severity
     * @return Response
@@ -62,7 +62,7 @@ class HomeController extends Controller
 
     /** 
     * Gets the specified resource in storage.
-    * GET ItemTypes
+    * GET /itemtypes
     *
     * param Api\Models\ItemType $itemtype
     * @return Response
@@ -74,7 +74,7 @@ class HomeController extends Controller
 
     /** 
     * Gets the specified resource in storage.
-    * GET FraudCategories
+    * GET /frauds/categories
     *
     * param Api\Models\FraudCategory $fraudcategory
     * @return Response

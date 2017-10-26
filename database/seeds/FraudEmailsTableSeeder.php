@@ -24,6 +24,25 @@ class FraudEmailsTableSeeder extends BaseSeeder
             'fraud_case_id' => 2,
             'email' => 'scammed@yahoo.com'
         ];
+        $data[] = 
+        [
+            'id' => 3,
+            'fraud_case_id' => 2,
+            'email' => 'banks@outlook.com'
+        ];
+        $data[] = 
+        [
+            'id' => 5,
+            'fraud_case_id' => 4,
+            'email' => 'chargerseller@yahoo.com'
+        ];
+        $data[] = 
+        [
+            'id' => 6,
+            'fraud_case_id' => 5,
+            'email' => 'chargerseller@yahoo.com'
+        ];
+
         $this->truncateAndInsert('fraud_emails', $data);
     }
 }

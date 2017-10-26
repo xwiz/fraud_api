@@ -5,6 +5,11 @@ namespace App\Api\Transformers;
 use App\Api\Models\BaseModel;
 use League\Fractal\TransformerAbstract;
 
+
+/**
+ * Class BaseTransformer
+ * @package Api\Transformers
+ */
 class BaseTransformer extends TransformerAbstract
 {
     public $availableIncludes = [];
@@ -12,13 +17,14 @@ class BaseTransformer extends TransformerAbstract
     public $defaultIncludes = [];
 
     /**
-     * Turn this item object into a generic array
-     *
-     * @return array
-     */
-    // If model is null ,it return null
+    * Base Transform method
+    * @param $model
+    * @throws \Exception
+    * @return array
+    */
     public  function transform($model)
     {
+        // If model is null ,it return null
         if($model === null)
         {
             return null;
@@ -42,6 +48,16 @@ class BaseTransformer extends TransformerAbstract
         }
     }
 
+
+    /**
+     * Create a new item resource object
+     *
+     * @api
+     * @param $data
+     * @param $transformer
+     * @param $resourceKey
+     * @return \League\Fractal\Resource\Item
+     **/
     public function item($data, $transformer, $resourceKey = 'data')
     {
         return parent::Item($data, $transformer, $resourceKey);

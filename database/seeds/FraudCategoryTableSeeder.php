@@ -40,6 +40,7 @@ class FraudCategoryTableSeeder extends BaseSeeder
             ]
             
         ];
+        
         $this->truncateAndInsert('fraud_categories', $data);
     }
 

@@ -1,0 +1,14 @@
+<?php 
+
+namespace App\Api\Transformers;
+
+use App\Api\Models\Bank;
+
+class BankTransformer extends BaseTransformer
+{
+
+   public function includeBank($model)
+    {
+        return $this->item($model->Bank, new BankTransformer);
+    }
+}

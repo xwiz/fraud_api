@@ -16,29 +16,38 @@ class UsersTableSeeder extends BaseSeeder
             [
                 'id' => 1,
                 'first_name' => 'Harry',
-                'last_name' => 'kane',
-                'email' => 'harrykane@gmail.com',
+                'last_name' => 'Moses',
+                'email' => 'harrymoses@gmail.com',
                 'phone_number'=> '07031111111',
                 'password' => bcrypt('qwerty')
             ],
             [
                 'id' => 2,
-                'first_name' => 'Diego',
-                'last_name' => 'Costa',
-                'email' => 'diegocosta@gmail.com',
+                'first_name' => 'Marcos',
+                'last_name' => 'Boanventure',
+                'email' => 'marcos@yahoo.com',
                 'phone_number'=> '08030000000',
-                'password' => bcrypt('asdflkj')
+                'password' => bcrypt('qwerty')
             ],
             [
                 'id' => 3,
-                'first_name' => 'Alvaro',
-                'last_name' => 'Morata',
-                'email' => 'alvaromorata@yahoo.com',
+                'first_name' => 'Akintunde',
+                'last_name' => 'Anike',
+                'email' => 'a.anike@yahoo.com',
                 'phone_number'=> '07032345678',
-                'password' => bcrypt('1234567')
+                'password' => bcrypt('qwerty')
+            ],
+            [
+                'id' => 4,
+                'first_name' => 'Alvaro',
+                'last_name' => 'Santos',
+                'email' => 'morata@yahoo.com',
+                'phone_number'=> '2347030989898',
+                'password' => bcrypt('qwerty')
             ],
             
         ];
+        
         $this->truncateAndInsert('users', $data);
     }
     

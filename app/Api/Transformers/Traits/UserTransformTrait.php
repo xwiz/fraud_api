@@ -3,7 +3,7 @@ namespace App\Api\Transformers\Traits;
 
 use App\Api\Transformers\UserTransformer;
 
- trait UserTransformTrait
+trait UserTransformTrait
 {
 
     /**

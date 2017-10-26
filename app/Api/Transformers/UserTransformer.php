@@ -4,6 +4,11 @@ namespace App\Api\Transformers;
 
 use App\Api\Models\User;
 
+
+/**
+ * Class UserTransformer
+ * @package Api\Transformers
+ */
 class UserTransformer extends BaseTransformer
 {
     public $availableIncludes = ['fraudCases'];
@@ -11,9 +16,9 @@ class UserTransformer extends BaseTransformer
 
 
     /**
-    * Include user data and transform it
-    * @param BaseModel $model
-    * @return \League\Fractal\Resource\Item
+    * Include fraudCase data and transform it
+    * @param Model $model
+    * @return \League\Fractal\Resource\collection
     */
     public function includeFraudCases(User $model)
     {

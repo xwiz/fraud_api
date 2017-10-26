@@ -16,26 +16,43 @@ class BaseModel extends Model
 {
     /**
      * Model validator
+     *
+     * @var BaseValidator
      */
-
     protected $validator;
 
+    /**
+     * Model errors
+     *
+     * @var array
+     */
     protected $errors = [];
 
+    /**
+     * Model data
+     *
+     * @var array
+     */
     protected $data = [];
 
+    /**
+     * Model messages
+     *
+     * @var array
+     */
     protected $messages = [];
 
     /**
      * Exclude from transforms
      * @var array
      */
-    protected $excludeTransforms = ['updated_at', 'created_at', 'deleted_at', 'pivot'];
+    protected $excludeTransforms = ['updated_at', 'created_at', 'deleted_at', 'pivot', 'relevance'];
 
 
     /**
      * Default hidden attributes
      * This attribute will be excluded from JSON
+     * @var array
      */
     protected $hidden = ['password'];
 
@@ -96,21 +113,23 @@ class BaseModel extends Model
      */
     public function validate(array $data, $type = 'create')
     {
-        if ($this->validator == null){
+        if ($this->validator == null)
+        {
           //attempt to create new validator and validate.
           $validator = Validator::make($data, $this->rules[$type], $this->messages);
           $this->data = $data;
-          if (!$result = $validator->passes()) {
-              $this->errors = $validator->messages()->getMessages();
-          }
-          return $result;
+            if (!$result = $validator->passes())
+            {
+                $this->errors = $validator->messages()->getMessages();
+            }
+            return $result;
         }
         $validationResult = $this->validator->validate($data, $type);
-
-        if (! $validationResult){
+        
+        if (! $validationResult)
+        {
             $this->errors = $this->validator->errors()->getMessages();
         }
-
         return $validationResult;
     }
 }

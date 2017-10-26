@@ -9,18 +9,18 @@ class Bank extends BaseModel
 {
     /**
     * The attributes of this model that can be auto-filled from input data
+    * 
+    * @var array
     */
     protected $fillable = ['name'];
 
-    //Banks has many Accounts
+    /**
+     * Relation to fraudAccounts
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function fraudAccounts()
     {
-    	return $this->hasMany('\App\Api\Models\FraudAccount');   
+    	return $this->hasMany(FraudAccount::class);   
     }
     
-    //todo
-    // public function fraudWebsite()
-    // {
-    // return $this->
-    // }
 }

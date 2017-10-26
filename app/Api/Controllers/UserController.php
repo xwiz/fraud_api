@@ -2,7 +2,7 @@
 
 namespace App\Api\Controllers;
 
-
+use API;
 use JWTAuth;
 use App\Api\Models\User;
 use Illuminate\Http\Request;
@@ -18,6 +18,9 @@ class UserController extends Controller
 {
     use Helpers;
 
+    /**
+    * @var Api\Models\User $model
+    */
     private $model;
 
 
@@ -28,29 +31,28 @@ class UserController extends Controller
      */
     private $user;
 
-    // *
-    //  * Fraud Case model instance
-    //  *
-    //  * @var FraudCase
-     
-    // private $fraudCase;
-
-
-
-
-    public function __construct( User $user)
+     /**
+     * Class constructor
+     *
+     * @param User $user
+     */
+    public function __construct(User $user)
     {
         $this->model = $user;
-        //$this->fraudCaseModel = $fraudCase;
     }
 
-
+    /**
+    * View current logged in user info
+    * GET /users/me
+    * @return Response
+    */
     public function index()
     {
-       return $users = User::all();
+       return API::user();
     }
 
-    /*
+
+    /**
     * Creates a new user
     * POST /users
     * Request params:
@@ -77,7 +79,7 @@ class UserController extends Controller
 
     /** 
     * Update the specified resource in storage.
-    * PUT users/{user}
+    * PUT users/{id}
     *
     * @param $id
     * @return Response
@@ -100,6 +102,9 @@ class UserController extends Controller
 
     /**
     * Log user in with generated token
+    * POST /users/me
+    * Request params: 
+    * token: string
     * @return Response
     */
     public function getAuthenticatedUser(User $user)
@@ -129,9 +134,9 @@ class UserController extends Controller
 
     /**
     * Remove the specified resource from storage.
-    * DELETE users/{user}
+    * DELETE users/{id}
     *
-    * @param  int  $user
+    * @param  $id
     * @return Response
     */
     public function destroyUser(Request $request, $id)
@@ -141,10 +146,4 @@ class UserController extends Controller
     }
 
 
-    public function searchUser(Request $request)
-    {
-        $query = $request->get('keyword');
-        return $user = User::search($query)->get();
-        
-    }
 }

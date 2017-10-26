@@ -169,6 +169,8 @@ return [
         Dingo\Api\Provider\LaravelServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -236,6 +238,7 @@ return [
         'API' => Dingo\Api\Facade\API::class,
         'JWTAuth'=> Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

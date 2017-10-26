@@ -34,4 +34,9 @@ class UserController extends Controller
         return 'search area page';
     }
 
+    public function recoverPassword()
+    {
+        return 'password recovery page';
+    }
+
 }

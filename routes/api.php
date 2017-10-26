@@ -43,47 +43,55 @@ $controllers =[
 
 $api->version('v1', function ($api) use($controllers){
 
-//prefix is api/v1
+    //API routes
+    //prefix is api/v1
     $api->group(['prefix' => 'v1', 'middleware' => 'cors'], function ($api) use ($controllers){
 
-        $api->post('register', [ 'uses' => $controllers['user'].'@storeUser']);
-        $api->post('authenticate', [ 'uses' => $controllers['auth'].'@authenticate']);
+        /**
+        * Unprotected Routes
+        *
+        *
+        * Fraud Case routes
+        */
+        $api->group(['prefix' => 'frauds'], function($api) use ($controllers)
+        {
+            $api->get('/', [ 'uses' => $controllers['fraud'].'@showFrauds']);
+            $api->post('/', [ 'uses' => $controllers['fraud'].'@storeFraud']);
+            $api->put('{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
+            $api->get('search', [ 'uses' => $controllers['fraud'].'@searchFraud']);
+            $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
 
-        $api->get('user', ['uses'=> $controllers['user'].'@index']);
+            $api->get('categories', [ 'uses' => $controllers['home'].'@getFraudCategories']);
+        });
+
+
+
+        $api->get('/banks', [ 'uses' => $controllers['home'].'@getBanks']);
+        $api->get('/severities', [ 'uses' => $controllers['home'].'@getSeverities']);
+        $api->get('/itemtypes', [ 'uses' => $controllers['home'].'@getItemTypes']);
 
         
-        $api->post('edit/{id}', ['uses' =>  $controllers['user'] .'@updateUser']);
+        $api->post('/', [ 'prefix' => 'users','uses' => $controllers['user'].'@storeUser']);
+        $api->post('/recoverpassword', [ 'prefix' => 'users', 'uses' => $controllers['user'].'@recoverPassword']);
+        $api->post('/authenticate', [ 'prefix' => 'auth', 'uses' => $controllers['auth'].'@authenticate']);
         
-        $api->post('update/{id}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
-
-
-        $api->delete('/delete/{id}', [ 'uses' =>  $controllers['user'] .'@destroyUser']); 
-
-        $api->post('fraud/case', [ 'uses' => $controllers['fraud'].'@storeFraud']);
-
-        $api->delete('/deletecase/{id}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
-
-        $api->get('banks', [ 'uses' => $controllers['home'].'@getBanks']);
-        $api->get('severities', [ 'uses' => $controllers['home'].'@getSeverities']);
-        $api->get('itemtypes', [ 'uses' => $controllers['home'].'@getItemTypes']);
-        $api->get('fraud/categories', [ 'uses' => $controllers['home'].'@getFraudCategories']);
-    
-
-        $api->get('cases', [ 'uses' => $controllers['fraud'].'@showFrauds']);
-        
-
-        //$api->post('search', [ 'uses' => $controllers['fraud'].'@searchCase']);
-
-        $api->post('search', [ 'uses' => $controllers['user'].'@searchUser']);
-
-
+        /**
+        * User routes
+        * Protected Routes
+        */
         $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)
         {
-            $api->group(['prefix' => 'user'], function($api) use ($controllers)
+            $api->group(['prefix' => 'users'], function($api) use ($controllers)
             {
-                $api->get('/me', ['uses' =>  $controllers['user'] .'@getAuthenticatedUser']);
-                $api->get('/mine', ['uses' =>  $controllers['user'] .'@me']);
+                $api->get('/me', ['uses'=> $controllers['user'].'@index']);
+                $api->put('{user}', ['uses' =>  $controllers['user'] .'@updateUser']);
+                $api->post('/me', ['uses' =>  $controllers['user'] .'@getAuthenticatedUser']);
+                $api->delete('{user}', [ 'uses' =>  $controllers['user'] .'@destroyUser']); 
             });
         });
     });
 });
+
+//model bindings
+Route::model('user', 'Api\Models\User');
+Route::model('fraud', 'Api\Models\FraudCase');

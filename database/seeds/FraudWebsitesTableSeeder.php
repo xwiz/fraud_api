@@ -15,24 +15,18 @@ class FraudWebsitesTableSeeder extends BaseSeeder
         $data[] = 
         [
             'id' => 1,
-            'fraud_case_id' => 1,
-            'website_url' => 'http://scamng.com',
-            'bank_id' => 1
+            'fraud_case_id' => 3,
+            'website_url' => 'unitybankng.com',
+            'bank_id' => 15
         ];
         $data[] = 
         [
             'id' => 2,
-            'fraud_case_id' => 2,
-            'website_url' => 'http://fraudatweb.ng',
-            'bank_id' => 2
-        ]; 
-        $data[] = 
-        [
-            'id' => 3,
-            'fraud_case_id' => 2,
-            'website_url' => 'http://thisisascamwebpage.ng',
-            'bank_id' => 5
-        ]; 
+            'fraud_case_id' => 3,
+            'website_url' => 'http://iscam.com',
+            'bank_id' => 15
+        ];
+        
         $this->truncateAndInsert('fraud_websites', $data);
     }
 }

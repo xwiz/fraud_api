@@ -2,14 +2,14 @@
 
 namespace App\Api\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Api\Models\ItemType;
 
+
+/**
+ * Class ItemTypeTransformer
+ * @package Api\Transformers
+ */
 class ItemTypeTransformer extends BaseTransformer
 {
 
-   public function includeItemType($model)
-    {
-        return $this->item($model->ItemType, new ItemTypeTransformer);
-    }
 }

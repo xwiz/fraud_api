@@ -16,7 +16,7 @@ class CreateFraudCaseFilesTable extends Migration
         Schema::create('fraud_case_files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fraud_case_id')->unsigned()->index();
-            $table->string('picture_url', 255);
+            $table->string('picture_url', 255)->nullable();
             $table->boolean('is_fraudster_picture')->default(0);
             $table->foreign('fraud_case_id')->references('id')->on('fraud_cases')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

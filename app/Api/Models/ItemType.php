@@ -9,11 +9,17 @@ class ItemType extends BaseModel
 {
     /**
     * The attributes of this model that can be auto-filled from input data
+    *
+    * @var array
     */
     protected $fillable = ['name'];
 
+    /**
+     * Relation to fraudCases
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function fraudCases()
     {
-        return $this->hasMany('\App\Api\Models\FraudCase');
+        return $this->hasMany(FraudCase::class);
     }
 }

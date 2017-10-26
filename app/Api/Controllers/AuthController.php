@@ -4,15 +4,15 @@ namespace App\Api\Controllers;
 
 use JWTAuth;
 use App\Api\Models\User;
-use App\Api\Models\Authentication;
 use Dingo\Api\Http\Request;
-use App\Http\Controllers\Controller;
-use Tymon\JwTAuth\Exceptions\JWTException;
-use App\Api\Transformers\UserTransformer;
 use Dingo\Api\Routing\Helpers;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Crypt;
+use App\Api\Models\Authentication;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Input;
+use App\Api\Transformers\UserTransformer;
+use Tymon\JwTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -35,18 +35,30 @@ class AuthController extends Controller
     private $userModel;
 
 
+    /**
+     * Class constructor
+     *
+     * @param User $userModel
+     * @param Authentication $authenticationModel
+     */
     public function __construct(User $userModel, Authentication $authenticationModel)
     {
         $this->userModel = $userModel;
         $this->authenticationModel = $authenticationModel;
-
     }
 
+
+    /**
+     * Logs user to system using basic credentials
+     *
+     * @throws Exception
+     *
+     * @return array
+     */
     public function authenticate(Request $request)
     {
         try
         {
-
             $credentials = $request->only('email', 'password');
             $email = $credentials['email'];
             $user = $this->userModel->where(['email' => $email])->first(); 
@@ -73,6 +85,4 @@ class AuthController extends Controller
         // all good so return the token
         return response()->json(compact('token'));
     }
-
-
 }

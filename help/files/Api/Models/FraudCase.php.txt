@@ -1,0 +1,113 @@
+<?php
+
+namespace App\Api\Models;
+
+use App\Api\Models\BaseModel;
+use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
+
+class FraudCase extends BaseModel
+{
+
+    use SearchableTrait;
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'users.first_name' =>9,
+            'users.last_name' => 9,
+            'fraud_emails.email' => 9,
+            'fraud_cases.scammer_name' => 10,
+            'fraud_accounts.account_no' => 10,
+            'fraud_mobiles.phone_number' => 10,
+            'fraud_websites.website_url' => 10,
+            'fraud_accounts.account_name' => 10,
+            'fraud_cases.scammer_real_name' => 10,
+        ],
+        'joins' => [
+            'users' => ['fraud_cases.user_id', 'users.id'],
+            'fraud_emails' => ['fraud_cases.id','fraud_emails.fraud_case_id'],
+            'fraud_mobiles' => ['fraud_cases.id','fraud_mobiles.fraud_case_id'],
+            'fraud_accounts' => ['fraud_cases.id','fraud_accounts.fraud_case_id'],
+            'fraud_websites' => ['fraud_cases.id','fraud_websites.fraud_case_id'],
+        ],  
+
+    ];
+
+
+    /**
+    * The database table used by the model.
+    *
+    * @var string
+    */
+    protected $table = 'fraud_cases';
+
+    /**
+    * The attributes of this model that can be auto-filled from input data
+    */
+    protected $fillable = [
+        'user_id', 'scam_start_date', 'scam_realization_date','severity_id', 'amount_scammed_off', 'fraud_category_id', 'scammer_name', 'scammer_real_name', 'item_type_id', 'item_name'
+    ];
+
+    public $rules = [
+        'create' => [
+            'amount_scammed_off' => 'numeric',
+            'scammer_real_name' => 'min:3',
+            'item_name' => 'max:150',
+        ],
+        'update' => [
+            'amount_scammed_off' => 'numeric',
+            'scammer_real_name' => 'min:3',
+            'item_name' => 'max:150',
+        ],
+    ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function severity()
+    {
+        return $this->belongsTo(Severity::class);
+    }
+    public function itemType()
+    {
+        return $this->belongsTo(ItemType::class);
+    }
+
+    public function fraudCaseFiles()
+    {
+        return $this->hasMany(FraudCaseFile::class);
+    }
+
+    public function fraudCategory()
+    {
+        return $this->belongsTo(FraudCategory::class);
+    }
+
+    public function fraudEmails()
+    {
+        return $this->belongsToMany(FraudEmail::class, 'fraudcase_fraudemail', 'fraud_case_id', 'fraud_email_id');
+    }
+    
+    public function fraudMobiles()
+    {
+        return $this->belongsToMany(FraudMobile::class, 'fraudcase_fraudmobile', 'fraud_case_id', 'fraud_mobile_id');
+    }
+
+    public function fraudAccounts()
+    {
+        return $this->belongsToMany(FraudAccount::class, 'fraudaccount_fraudcase', 'fraud_case_id', 'fraud_account_id');
+    }
+
+    public function fraudWebsites()
+    {
+        return $this->belongsToMany(FraudWebsite::class, 'fraudcase_fraudwebsite', 'fraud_case_id', 'fraud_website_id');
+    }
+}

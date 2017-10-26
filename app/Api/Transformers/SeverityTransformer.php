@@ -2,14 +2,14 @@
 
 namespace App\Api\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Api\Models\Severity;
 
+
+/**
+ * Class SeverityTransformer
+ * @package Api\Transformers
+ */
 class SeverityTransformer extends BaseTransformer
 {
-
-   public function includeSeverity($model)
-    {
-        return $this->item($model->Severity, new SeverityTransformer);
-    }
+	
 }

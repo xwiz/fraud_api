@@ -9,6 +9,8 @@ class FraudAccount extends BaseModel
 {
     /**
     * The attributes of this model that can be auto-filled from input data
+    *
+    * @var array
     */
     protected $fillable = ['account_no', 'bank_id', 'account_name', 'fraud_case_id'];
 
@@ -20,15 +22,22 @@ class FraudAccount extends BaseModel
         'update' => [],
     ];
 
-
+    /**
+     * Relation to bank
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function bank()
-        {
-            return $this->belongsTo('\App\Api\Models\Bank');
-        }
+    {
+        return $this->belongsTo(Bank::class);
+    }
 
+    /**
+     * Relation to fraudCases
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function fraudCases()
     {
-        return $this->belongsToMany('\App\Api\Models\FraudCase');
+        return $this->belongsToMany(FraudCase::class);
     }
     
 }

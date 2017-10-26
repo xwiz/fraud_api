@@ -2,14 +2,13 @@
 
 namespace App\Api\Transformers;
 
-use League\Fractal\TransformerAbstract;
-use App\Api\Models\Bank;
+use App\Api\Models\FraudCategory;
 
+/**
+ * Class FraudCategoryTransformer
+ * @package Api\Transformers
+ */
 class FraudCategoryTransformer extends BaseTransformer
 {
 
-   public function includeFraudCategory($model)
-    {
-        return $this->item($model->FraudCategory, new FraudCategoryTransformer);
-    }
 }

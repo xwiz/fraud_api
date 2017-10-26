@@ -9,11 +9,16 @@ class FraudCaseFile extends BaseModel
 {
     /**
     * The attributes of this model that can be auto-filled from input data
+    * @var array
     */
     protected $fillable = ['fraud_case_id', 'picture_url', 'is_fraudster_picture'];
 
+    /**
+     * Relation to fraudCase
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function fraudCase()
     {
-        return $this->belongsTo('\App\Api\Models\FraudCase');
+        return $this->belongsTo(FraudCase::class);
     }
 }

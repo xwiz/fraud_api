@@ -18,17 +18,27 @@ class FraudCase extends BaseModel
      */
     protected $searchable = [
         'columns' => [
+            'users.first_name' =>9,
+            'users.last_name' => 9,
+            'fraud_emails.email' => 9,
+            'fraud_cases.scammer_name' => 10,
             'fraud_accounts.account_no' => 10,
-            'fraud_accounts.account_name' => 9,
-            'fraud_cases.scammer_name' => 9,
-            'fraud_cases.scammer_real_name' => 9,
+            'fraud_mobiles.phone_number' => 10,
+            'fraud_websites.website_url' => 10,
+            'fraud_accounts.account_name' => 10,
+            'fraud_cases.scammer_real_name' => 10,
         ],
         'joins' => [
+            'users' => ['fraud_cases.user_id', 'users.id'],
+            'fraud_emails' => ['fraud_cases.id','fraud_emails.fraud_case_id'],
+            'fraud_mobiles' => ['fraud_cases.id','fraud_mobiles.fraud_case_id'],
             'fraud_accounts' => ['fraud_cases.id','fraud_accounts.fraud_case_id'],
-        ],
-    
+            'fraud_websites' => ['fraud_cases.id','fraud_websites.fraud_case_id'],
+        ],  
 
     ];
+
+
     /**
     * The database table used by the model.
     *
@@ -38,8 +48,9 @@ class FraudCase extends BaseModel
 
     /**
     * The attributes of this model that can be auto-filled from input data
+    *
+    * @var array
     */
-
     protected $fillable = [
         'user_id', 'scam_start_date', 'scam_realization_date','severity_id', 'amount_scammed_off', 'fraud_category_id', 'scammer_name', 'scammer_real_name', 'item_type_id', 'item_name'
     ];
@@ -58,56 +69,85 @@ class FraudCase extends BaseModel
     ];
 
 
+    /**
+     * Relation to User
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-
-    public function itemType()
-    {
-        return $this->belongsTo(ItemType::class);
-    }
-
-
-    public function fraudCategory()
-    {
-        return $this->belongsTo(FraudCategory::class);
-    }
-
-
+    /**
+     * Relation to severity
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function severity()
     {
         return $this->belongsTo(Severity::class);
     }
 
-
-    public function fraudWebsites()
+    /**
+     * Relation to itemtype
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function itemType()
     {
-        return $this->belongsToMany(FraudWebsite::class, 'fraudcase_fraudwebsite', 'fraud_case_id', 'fraud_website_id');
+        return $this->belongsTo(ItemType::class);
     }
 
-
+    /**
+     * Relation to fraudCasesFiles
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function fraudCaseFiles()
     {
         return $this->hasMany(FraudCaseFile::class);
     }
 
+    /**
+     * Relation to fraudCategory
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function fraudCategory()
+    {
+        return $this->belongsTo(FraudCategory::class);
+    }
 
+    /**
+     * Relation to fraudEmails
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function fraudEmails()
     {
         return $this->belongsToMany(FraudEmail::class, 'fraudcase_fraudemail', 'fraud_case_id', 'fraud_email_id');
     }
     
 
+    /**
+     * Relation to fraudMobiles
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function fraudMobiles()
+    {
+        return $this->belongsToMany(FraudMobile::class, 'fraudcase_fraudmobile', 'fraud_case_id', 'fraud_mobile_id');
+    }
+
+    /**
+     * Relation to fraudAccounts
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function fraudAccounts()
     {
         return $this->belongsToMany(FraudAccount::class, 'fraudaccount_fraudcase', 'fraud_case_id', 'fraud_account_id');
     }
 
-
-    public function fraudMobiles()
+    /**
+     * Relation to fraudWebsites
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function fraudWebsites()
     {
-        return $this->belongsToMany(FraudMobile::class, 'fraudcase_fraudmobile', 'fraud_case_id', 'fraud_mobile_id');
+        return $this->belongsToMany(FraudWebsite::class, 'fraudcase_fraudwebsite', 'fraud_case_id', 'fraud_website_id');
     }
 }

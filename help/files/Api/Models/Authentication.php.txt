@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Api\Models;
+
+use Carbon\Carbon;
+use App\Api\Models\BaseModel;
+use App\Api\Models\Authentication;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Model;
+
+class Authentication extends BaseModel
+{
+    protected $fillable = ['user_id', 'token','expiry'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function store($user_id, $token)
+    {
+        $authentication = $this->where(array('user_id' => $user_id));
+
+        $authenticationData = array(
+            'token' => $token,
+            //expire in minutes, after 1 hour
+            'expiry' => Carbon::now()->addMinutes(61)
+        );
+
+        if ($authentication->count() > 0){
+            $authentication->update($authenticationData);
+        }else{
+            $authenticationData['user_id'] = $user_id;
+            Authentication::create($authenticationData);
+        }
+
+        return true;
+    }
+}
+

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<nav id="TOC">
+<ul>
+<li><a href="#secapay-watch-api-1.0">SECAPAY WATCH API 1.0</a></li>
+<li><a href="#documentation">Documentation</a><ul>
+<li><a href="#authentication">Authentication</a><ul>
+<li><a href="#basic-authentication">Basic Authentication</a></li>
+<li><a href="#user-features">User Features</a></li>
+<li><a href="#retrieve-user-information">Retrieve User Information</a></li>
+<li><a href="#update-user-information">Update User Information</a></li>
+<li><a href="#delete-user-information">Delete User Information</a></li>
+</ul></li>
+<li><a href="#fraud-case">Fraud Case</a><ul>
+<li><a href="#retrieve-fraud-cases">Retrieve Fraud Cases</a></li>
+<li><a href="#create-fraudcase">Create FraudCase</a></li>
+<li><a href="#update-fraudcase">Update FraudCase</a></li>
+<li><a href="#delete-fraudcase">Delete FraudCase</a></li>
+<li><a href="#search-for-keyword">Search for Keyword</a></li>
+<li><a href="#retrieve-bank-information">Retrieve Bank Information</a></li>
+<li><a href="#retrieve-severity-information">Retrieve Severity Information</a></li>
+<li><a href="#retrieve-item-types-information">Retrieve Item types Information</a></li>
+<li><a href="#retrieve-fraud-categories-information">Retrieve Fraud Categories Information</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="secapay-watch-api-1.0">SECAPAY WATCH API 1.0</h1>
+<p>The Secapay API Watch provides a public system for performing functionalities such as:</p>
+<ul>
+<li>Report Fraudulent Transactions</li>
+<li>View or Search Fraudulent transactions</li>
+</ul>
+<p>The primary purpose of the API is to have a trusted system that can be used to verify Phone Numbers, Emails and Bank Accounts that may be involved in SCAM or Fraud.</p>
+<p>Once generated, you may be able to see your token to access the API and token will remain valid until re-generated.</p>
+<h1 id="documentation">Documentation</h1>
+<p>The Secapay Watch API is a REST API that maintains a fairly uniform pattern both in the implementation and style.</p>
+<p>Additional information can be achieved by simply specifying the type of information you want to include. e.g.:</p>
+<pre><code>/frauds/search?keyword=email,account_name</code></pre>
+<p>The includable parameters are listed where applicable.</p>
+<p>API endpoints below are listed without the base URI:</p>
+<h2 id="authentication">Authentication</h2>
+<pre><code>In order to make authenticated calls, you only need to include the token obtained from auth/authenticate.
+
+Authorization: token
+
+This will allow you to call protected endpoints that require user authentication, e.g &#39;users/me&#39;
+
+    API prefix api/vi:</code></pre>
+<h3 id="basic-authentication">Basic Authentication</h3>
+<p>Basic authentication is the simple default authentication that can be used to obtain a token from the API. Tokens are valid for 1 hour(60 minutes) from the time obtained.</p>
+<pre><code>Endpoint:       /auth/authenticate/
+Http method:    post
+Body:
+    email:      email
+    password:   password
+
+Response
+    Successful
+        Http code:  200
+        [
+            token : string
+        ]
+    Error
+        Http code : 401
+        [
+            message : invalid_credentials
+        ]
+        Http code : 500
+        [
+            message : could_not_create_token
+        ]</code></pre>
+<h3 id="user-features">User Features</h3>
+<p>Functionalities to create, delete, retrieve or modify user information through the API</p>
+<h3 id="retrieve-user-information">Retrieve User Information</h3>
+<pre><code>Endpoint :      /users/me
+Http method :   get
+
+Response
+    Successful
+        Http code : 200
+        [
+            {user}
+        ]</code></pre>
+<h3 id="update-user-information">Update User Information</h3>
+<pre><code>Endpoint:      /users/{userId}/
+Http method:    put
+
+Body:
+    first_name:     string
+    last_name:      string
+    email:          string
+    password:       string
+
+Response
+    Successful
+        Http code: 200
+        [
+            {user}
+        ]
+    Error
+        Http code: 422
+        [
+            message : Could not update User. Errors...
+        ]</code></pre>
+<h3 id="delete-user-information">Delete User Information</h3>
+<pre><code>Endpoint:      /users/{userId}/
+Http method:    delete
+
+
+Response
+    Successful
+        Http code: 200
+        [
+            message : User ID &quot;. userId .&quot; Deleted Successfully
+        ]
+    Error
+        Http code: 422
+        [
+            message : Could not delete User. Errors...
+        ]</code></pre>
+<h2 id="fraud-case">Fraud Case</h2>
+<p>Functionalities to create, delete, retrieve or modify users reported case through the API.</p>
+<h3 id="retrieve-fraud-cases">Retrieve Fraud Cases</h3>
+<pre><code>Endpoint :      /frauds
+Http method :   get
+Includes : accounts, emails, websites, mobiles
+
+Response
+    Succesful
+        Http code : 200
+        [
+            data : [
+                {fraudcases}...
+            ]
+        ]   </code></pre>
+<h3 id="create-fraudcase">Create FraudCase</h3>
+<pre><code>Endpoint :                  /frauds
+Http method :               post
+
+Body : 
+    scammer_name:           string
+    scammer_real_name:      string
+    amount_scammed_off:     decimal
+    user_id:                integer
+    severity_id:            integer
+    item_type_id:           integer
+    fraud_category_id:      integer
+    scam_start_date:        datetime
+    scam_realization_date:  datetime
+    item_name:              string
+    account:                data: [
+                                {account_no:integer,
+                                 account_name:string,bank_id:integer}...
+                            ]
+    email:                  data: [
+                                {email:string}...
+                            ]
+    website_url:            data: [
+                                {website_url:string, bank_id:integer}...
+                            ]
+    phone_number:           data: [
+                                {phone_number:string}...
+                            ]
+    fraud_file              base64 string
+
+Response
+    Successful
+        Http code:  200
+        [
+            {fraudCase}
+        ]
+    Error
+        Http code: 422
+            [
+                message : Could not create FraudCase. Errors...
+            ]</code></pre>
+<h3 id="update-fraudcase">Update FraudCase</h3>
+<pre><code>Endpoint:      /frauds/{fraudId}
+Http method:    put
+
+Body : 
+    scammer_name:           string
+    scammer_real_name:      string
+    amount_scammed_off:     decimal
+    user_id:                integer
+    severity_id:            integer
+    item_type_id:           integer
+    fraud_category_id:      integer
+    scam_start_date:        datetime
+    scam_realization_date:  datetime
+    item_name:              string
+    account:                data: [
+                                {account_no:integer,
+                                 account_name:string,bank_id:integer}...
+                            ]
+    email:                  data: [
+                                {email:string}...
+                            ]
+    website_url:            data: [
+                                {website_url:string, bank_id:integer}...
+                            ]
+    phone_number:           data: [
+                                {phone_number:string}...
+                            ]
+    fraud_file              base64 string
+
+Response
+    Successful
+        Http code: 200
+        [
+            {fraudcase}
+        ]
+    Error
+        Http code: 422
+        [
+            message : Could not update FraudCase. Errors...
+        ]</code></pre>
+<h3 id="delete-fraudcase">Delete FraudCase</h3>
+<pre><code>Endpoint:      /frauds/{fraudId}/
+Http method:    delete
+
+
+Response
+    Successful
+        Http code: 200
+        [
+            message : Fraud Case &quot;. fraudId .&quot; Deleted Successfully;
+        ]
+    Error
+        Http code: 422
+        [
+            message : Could not delete fraudcase. Errors...
+        ]</code></pre>
+<h3 id="search-for-keyword">Search for Keyword</h3>
+<pre><code>Endpoint :      /frauds/search?keyword={keyword}
+Http method :   get
+Includes :      fraudcase, users
+
+Response
+    Successful
+        Http code : 200
+        [
+            {fraudcase}
+        ]</code></pre>
+<h3 id="retrieve-bank-information">Retrieve Bank Information</h3>
+<pre><code>Endpoint :      /banks
+Http method :   get
+
+Response
+    Successful
+        Http code : 200
+        [
+            {banks}
+        ]</code></pre>
+<h3 id="retrieve-severity-information">Retrieve Severity Information</h3>
+<pre><code>Endpoint :      /severities
+Http method :   get
+
+Response
+    Successful
+        Http code : 200
+        [
+            {severity}
+        ]</code></pre>
+<h3 id="retrieve-item-types-information">Retrieve Item types Information</h3>
+<pre><code>Endpoint :      /itemtypes
+Http method :   get
+
+Response
+    Successful
+        Http code : 200
+        [
+            {itemtypes}
+        ]</code></pre>
+<h3 id="retrieve-fraud-categories-information">Retrieve Fraud Categories Information</h3>
+<pre><code>Endpoint :      /frauds/categories
+Http method :   get
+
+Response
+    Successful
+        Http code : 200
+        [
+            {fraudcategories}
+        ]</code></pre>
+</body>
+</html>

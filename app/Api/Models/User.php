@@ -4,24 +4,12 @@ namespace App\Api\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Nicolaslopezj\Searchable\SearchableTrait;
 
 
 class User extends BaseModel
 {
     use Notifiable;
     
-    use SearchableTrait;
-
-
-     protected $searchable = [
-        'columns' => [
-            'users.first_name' => 10,
-            'users.last_name' => 9,
-            'users.email' => 9,
-        ],
-    ];
-    /
 
     /**
     * The database table used by the model.
@@ -40,7 +28,7 @@ class User extends BaseModel
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
@@ -53,18 +41,23 @@ class User extends BaseModel
             'first_name' => 'min:3|required',
             'last_name' => 'min:3|required',
             'email' => 'email|unique:users,email|required',
-            'password'=>'min:5',
+            'password'=>'min:3',
             'phone_number' => 'min:11|max:15|unique:users',
         ],
         'update' => [
             'first_name' => 'min:3',
             'last_name' => 'min:3',
-            'password'=>'min:5',
+            'password'=>'min:3',
             'phone_number' => 'min:11|max:15|unique:users',
             'email' => 'email|unique:users,email|required',
         ],
     ];
 
+
+    /**
+     * Relation to fraudCases
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function fraudCases()
     {
         return $this->hasMany(FraudCase::class);
