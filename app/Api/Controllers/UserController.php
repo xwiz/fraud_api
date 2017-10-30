@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Dingo\Api\Routing\Helpers;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Response;
 use App\Api\Transformers\UserTransformer;
-use Dingo\Api\Exception\StoreResourceFailedException;
 
 
 
@@ -36,8 +36,8 @@ class UserController extends Controller
      *
      * @param User $user
      */
-    public function __construct(User $user)
-    {
+     public function __construct(User $user)
+     {
         $this->model = $user;
     }
 
@@ -48,8 +48,8 @@ class UserController extends Controller
     */
     public function index()
     {
-       return API::user();
-    }
+     return API::user();
+ }
 
 
     /**
@@ -68,12 +68,14 @@ class UserController extends Controller
         
         if(!$this->model->validate($data,'create'))
         {
-            throw new StoreResourceFailedException('Could not create user. Errors: '. $this->model->getErrorsInline());
+            return Response::make(['error' => $this->model->getErrors()], '422');        
         }
         $data['password'] = bcrypt($data['password']);
         $this->model->fill($data);
         $this->model->save();
-        return $this->model;
+        return response()->json([
+            "message" => "Congratulations, New User created Successfully!!!"
+            ]);
     }
 
 
