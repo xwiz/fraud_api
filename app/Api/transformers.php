@@ -1,6 +1,6 @@
 <?php
 
-$model = ['Authentication','User', 'Bank', 'FraudAccount', 'FraudCase', 'FraudCaseFile', 'FraudCategory', 'FraudEmail', 'FraudMobile', 'FraudWebsite', 'ItemType', 'Severity'];
+$model = ['User', 'Bank', 'FraudAccount', 'FraudCase', 'FraudCaseFile', 'FraudCategory', 'FraudEmail', 'FraudMobile', 'FraudWebsite', 'ItemType', 'Severity'];
 
 foreach($model as $transformer)
 {

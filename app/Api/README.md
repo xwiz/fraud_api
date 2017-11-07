@@ -98,7 +98,18 @@ Functionalities to create, delete, retrieve or modify user information through t
 				{user}
 			]
 
+### Retrieve User All Reported Cases
 
+	Endpoint:		/frauds/user/{user}
+	Http method :	get
+
+	Response
+		Successfull
+			Http code : 200
+			[
+				{fraudcase(s)}
+			]
+			
 ### Update User Information
     Endpoint:      /users/{userId}/
     Http method:    put

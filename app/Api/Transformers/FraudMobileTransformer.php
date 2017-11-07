@@ -10,7 +10,7 @@ use App\Api\Models\FraudMobile;
  */
 class FraudMobileTransformer extends BaseTransformer
 {
-    public $availableIncludes = ['fraud_case'];
+    public $availableIncludes = [];
     public $defaultIncludes = [];
 
     /*

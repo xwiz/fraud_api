@@ -45,7 +45,7 @@ class HomeController extends Controller
     */
     public function getBanks(Bank $bank )
     {
-        return $bank->all();
+        return ['banks' => $bank->all()];
     }
 
     /** 
@@ -57,7 +57,7 @@ class HomeController extends Controller
     */
     public function getSeverities(Severity $severity )
     {
-        return $severity->all();
+        return ['severities' => $severity->all()];
     }
 
     /** 
@@ -69,7 +69,7 @@ class HomeController extends Controller
     */
     public function getItemTypes(ItemType $itemtype )
     {
-        return $itemtype->all();
+        return ['itemtypes' => $itemtype->all()];
     }
 
     /** 
@@ -81,6 +81,6 @@ class HomeController extends Controller
     */
     public function getFraudCategories(FraudCategory $fraudcategory)
     {
-        return $fraudcategory->all();
+        return ['fraudcategories' => $fraudcategory->all()];
     }
 }

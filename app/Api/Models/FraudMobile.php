@@ -13,6 +13,13 @@ class FraudMobile extends BaseModel
     */
     protected $fillable = ['fraud_case_id', 'phone_number'];
 
+     /**
+     * Default hidden attributes
+     * This attribute will be excluded from JSON
+     * @var array
+     */
+    protected $hidden = ['updated_at', 'created_at', 'pivot'];
+
     public $rules = [
         'create' => [
             'phone_number' => 'min:11|max:15',

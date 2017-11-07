@@ -17,7 +17,7 @@ class CreateFraudMobilesTable extends Migration
             $table->increments('id');
             $table->integer('fraud_case_id')->unsigned();
             $table->foreign('fraud_case_id')->references('id')->on('fraud_cases')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('phone_number', 15)->index();
+            $table->string('phone_number', 15)->nullable()->index();
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ use App\Api\Models\User;
 class UserTransformer extends BaseTransformer
 {
     public $availableIncludes = ['fraudCases'];
-    public $defaultIncludes = ['fraudCases'];
+    public $defaultIncludes = [];
 
 
     /**

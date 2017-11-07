@@ -15,7 +15,14 @@ class Authentication extends BaseModel
      *
      * @var string
      */
-    protected $table = 'authentication';
+    protected $table = 'authentications';
+
+     /**
+     * Default hidden attributes
+     * This attribute will be excluded from JSON
+     * @var array
+     */
+    protected $hidden = ['updated_at', 'created_at', 'pivot'];
 
 
     /**
@@ -50,8 +57,9 @@ class Authentication extends BaseModel
 
         $authenticationData = array(
             'token' => $token,
-            //expire in minutes, after 1 hour
-            'expiry' => Carbon::now()->addMinutes(61)
+            
+            //expire in minutes, after 1 week
+            'expiry' => Carbon::now()->addMinutes(10080)
         );
 
         if ($authentication->count() > 0){

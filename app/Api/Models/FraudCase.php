@@ -58,12 +58,10 @@ class FraudCase extends BaseModel
     public $rules = [
         'create' => [
             'amount_scammed_off' => 'numeric',
-            'scammer_real_name' => 'min:3',
             'item_name' => 'max:150',
         ],
         'update' => [
             'amount_scammed_off' => 'numeric',
-            'scammer_real_name' => 'min:3',
             'item_name' => 'max:150',
         ],
     ];

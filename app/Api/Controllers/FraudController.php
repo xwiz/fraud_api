@@ -98,9 +98,9 @@ class FraudController extends Controller
         $this->fraudCaseModel->save(); 
         $data['fraud_case_id'] = $this->fraudCaseModel->id;
         
-        if(isset($data['email']))
+        if(isset($data['emailData']))
         {
-            $emails = json_decode($data['email'], true);
+            $emails = json_decode($data['emailData'], true);
             foreach($emails as $email)
             {
                 if(!$this->fraudEmailModel->validate($email,'create'))
@@ -112,10 +112,10 @@ class FraudController extends Controller
             }
         }
 
-        if(isset($data['account']))
+        if(isset($data['accountData']))
         {
             //todo: checks if json is passed
-            $accounts = json_decode($data['account'], true);
+            $accounts = json_decode($data['accountData'], true);
             foreach($accounts as $account)
             {
                 if(!$this->fraudAccountModel->validate($account, 'create'))
@@ -127,9 +127,9 @@ class FraudController extends Controller
             }
         }
         
-        if(isset($data['website_url']))
+        if(isset($data['websiteData']))
         {
-            $websites = json_decode($data['website_url'], true);
+            $websites = json_decode($data['websiteData'], true);
             foreach($websites as $website)
             {
                 if(!$this->fraudWebsiteModel->validate($website, 'create'))
@@ -141,9 +141,9 @@ class FraudController extends Controller
             }
         }
 
-        if(isset($data['phone_number']))
+        if(isset($data['phoneData']))
         {
-            $phones = json_decode($data['phone_number'], true);
+            $phones = json_decode($data['phoneData'], true);
             foreach($phones as $phone_num)
             {
                 if(!$this->fraudMobileModel->validate($phone_num,'create'))
@@ -178,8 +178,7 @@ class FraudController extends Controller
     */
     public function showFrauds()
     {
-        return FraudCase::query()->paginate(1)->first();
-
+        return FraudCase::query()->paginate(6);
     }
 
     /**

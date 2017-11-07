@@ -21,6 +21,6 @@ class FraudWebsiteTransformer extends BaseTransformer
     */
 	public function includeFraudCase(FraudWebsite $model)
 	{
-		return $this->item($model->fraudCase, new FraudCaseTransformer);
+		//return $this->item($model->fraudCase, new FraudCaseTransformer);
 	}
 }

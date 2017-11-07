@@ -61,6 +61,7 @@ $api->version('v1', function ($api) use($controllers){
             $api->get('search', [ 'uses' => $controllers['fraud'].'@searchFraud']);
             $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
 
+
             $api->get('categories', [ 'uses' => $controllers['home'].'@getFraudCategories']);
         });
 
@@ -74,6 +75,7 @@ $api->version('v1', function ($api) use($controllers){
         $api->post('/', [ 'prefix' => 'users','uses' => $controllers['user'].'@storeUser']);
         $api->post('/recoverpassword', [ 'prefix' => 'users', 'uses' => $controllers['user'].'@recoverPassword']);
         $api->post('/authenticate', [ 'prefix' => 'auth', 'uses' => $controllers['auth'].'@authenticate']);
+        $api->get('/user/{user}', [ 'prefix' => 'frauds', 'uses' => $controllers['user'].'@userFraud']);
         
         /**
         * User routes

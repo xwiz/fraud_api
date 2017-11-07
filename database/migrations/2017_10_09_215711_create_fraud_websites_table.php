@@ -16,7 +16,7 @@ class CreateFraudWebsitesTable extends Migration
         Schema::create('fraud_websites', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fraud_case_id')->unsigned();
-            $table->string('website_url', 155);
+            $table->string('website_url', 155)->nullable();
             $table->integer('bank_id')->unsigned();
             $table->timestamps();
             

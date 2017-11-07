@@ -10,7 +10,7 @@ use App\Api\Models\FraudCase;
  */
 class FraudCaseTransformer extends BaseTransformer
 {
-    public $availableIncludes = ['fraudAccounts', 'fraudMobiles', 'fraudEmails', 'fraudWebsites', 'user'];
+    public $availableIncludes = [];
     public $defaultIncludes = ['fraudEmails', 'fraudAccounts', 'fraudWebsites','fraudMobiles', 'fraudCaseFiles'];
     
     /**
@@ -18,7 +18,7 @@ class FraudCaseTransformer extends BaseTransformer
     * @param BaseModel $model
     * @return \League\Fractal\Resource\collection
     */
-    public function includeFraudAccounts(FraudCase $model)
+    public function includeFraudAccounts($model)
     {
         return $this->collection($model->fraudAccounts, new FraudAccountTransformer);
     }

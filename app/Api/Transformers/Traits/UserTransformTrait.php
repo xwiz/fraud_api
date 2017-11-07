@@ -1,7 +1,7 @@
 <?php
-namespace App\Api\Transformers\Traits;
+namespace Api\Transformers\Traits;
 
-use App\Api\Transformers\UserTransformer;
+use Api\Transformers\UserTransformer;
 
 trait UserTransformTrait
 {
@@ -13,6 +13,9 @@ trait UserTransformTrait
      */
     public function includeUser($model)
     {
-        return $this->Item($model->user, new UserTransformer());
+    	if($model->user != null)
+    	{
+    		return $this->Item($model->user, new UserTransformer;
+    	}
     }
 }

@@ -6,6 +6,7 @@ use API;
 use JWTAuth;
 use App\Api\Models\User;
 use Illuminate\Http\Request;
+use App\Api\Models\FraudCase;
 use Dingo\Api\Routing\Helpers;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
@@ -31,14 +32,24 @@ class UserController extends Controller
      */
     private $user;
 
+    /**
+     * Fraud Case model instance
+     *
+     * @var FraudCase
+     */
+    private $fraudCase;
+
+
      /**
      * Class constructor
      *
      * @param User $user
+     * @param FraudCase $fraudCase
      */
-     public function __construct(User $user)
-     {
+    public function __construct(User $user, FraudCase $fraudCase)
+    {
         $this->model = $user;
+        $this->fraudCaseModel = $fraudCase;
     }
 
     /**
@@ -46,10 +57,23 @@ class UserController extends Controller
     * GET /users/me
     * @return Response
     */
-    public function index()
+    public function index(User $user)
     {
-     return API::user();
- }
+        return API::user();
+    }
+
+
+    /**
+    * Reterive Users all fraudcases
+    *GET frauds/me
+    * @param $request
+    * @return Response
+    */
+    public function userFraud(Request $request,User $user, FraudCase $fraudCase, $id)
+    {
+        $this->model = $this->model::find($id);
+        return FraudCase::where('user_id', $id)->paginate(5);
+    }
 
 
     /**
@@ -74,7 +98,8 @@ class UserController extends Controller
         $this->model->fill($data);
         $this->model->save();
         return response()->json([
-            "message" => "Congratulations, New User created Successfully!!!"
+            'message' => 'Congratulations, New User created Successfully!!!',
+            'user' => $this->model
             ]);
     }
 
@@ -98,10 +123,13 @@ class UserController extends Controller
         $data['password'] = bcrypt($data['password']);
         $this->model->fill($data);
         $this->model->save();
-        return $this->model;
+        return response()->json([
+            'message' => 'Congratulations, Update was Successful!!!',
+            'user' => $this->model
+            ]);
     }
 
-
+   
     /**
     * Log user in with generated token
     * POST /users/me
@@ -146,6 +174,4 @@ class UserController extends Controller
         $this->model = $this->model::find($id)->delete();
         return "User ID ". $id ." Deleted Successfully";
     }
-
-
 }

@@ -13,8 +13,20 @@ use League\Fractal\TransformerAbstract;
 class BaseTransformer extends TransformerAbstract
 {
     public $availableIncludes = [];
-
     public $defaultIncludes = [];
+    public $useTraits = true;
+
+    public function __construct(){
+        if (!count($this->defaultIncludes) && $this->useTraits)
+        {
+            // if not defined default includes, try to auto load traits and set up it as default includes
+            $traitsList = class_uses($this);
+            foreach ($traitsList as $traitName) {
+                $includeName = strtolower(str_replace(["TransformTrait", "Api\\Transformers\\Traits\\"], "", $traitName));
+                $this->defaultIncludes[] = $includeName;
+            }
+        }
+    }
 
     /**
     * Base Transform method
@@ -35,18 +47,19 @@ class BaseTransformer extends TransformerAbstract
         if($model instanceof $modelClass)
         {
             $result=[];
+
             foreach ($model->toArray() as $key => $value) 
             {
                 if($model->isTransformable($key))
-                $result[$key]= $value;
+                    $result[$key]= $value;
             }
             return $result;
         }
         else
         {
-           throw new \Exception(sprintf("Invalid model < %s > for tranformation at %s", get_class($model), get_class($this)));  
-        }
-    }
+         throw new \Exception(sprintf("Invalid model < %s > for tranformation at %s", get_class($model), get_class($this)));  
+     }
+ }
 
 
     /**

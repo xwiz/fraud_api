@@ -13,6 +13,13 @@ class FraudCaseFile extends BaseModel
     */
     protected $fillable = ['fraud_case_id', 'picture_url', 'is_fraudster_picture'];
 
+     /**
+     * Default hidden attributes
+     * This attribute will be excluded from JSON
+     * @var array
+     */
+    protected $hidden = ['updated_at', 'created_at', 'pivot'];
+
     /**
      * Relation to fraudCase
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -46,7 +46,7 @@ class BaseModel extends Model
      * Exclude from transforms
      * @var array
      */
-    protected $excludeTransforms = ['updated_at', 'created_at', 'deleted_at', 'pivot', 'relevance'];
+    protected $excludeTransforms = ['updated_at', 'created_at', 'deleted_at', 'relevance'];
 
 
     /**
@@ -54,7 +54,7 @@ class BaseModel extends Model
      * This attribute will be excluded from JSON
      * @var array
      */
-    protected $hidden = ['password'];
+    protected $hidden = ['pivot', 'password','pivot'];
 
 
     /**
