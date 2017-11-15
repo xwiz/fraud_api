@@ -16,8 +16,16 @@ body {
   line-height: 1.7;
   padding: 1em;
   margin: auto;
+  margin-left: 250px;
   max-width: 42em;
   background: #fefefe;
+}
+nav {
+  width: 250px;
+  position: fixed;
+  left: 0;
+  overflow: scroll;
+  height: 100%;
 }
 
 a {
@@ -260,6 +268,34 @@ table td {
     font-size: 16px;
   }
 }
+@media only screen and (min-width: 1024px) {
+  body {
+    margin-left: 280px;
+  }
+  nav {
+    width: 280px;
+  }
+}
+@media only screen and (min-width: 1400px) {
+  body {
+    margin-left: 300px;
+  }
+  nav {
+    width: 300px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  body {
+    margin-left: auto;
+  }
+  nav {
+    width: auto;
+    position: relative;
+    left: inherit;
+    overflow: auto;
+    height: inherit;
+  }
+}
 @media print {
   * {
     background: transparent !important;
@@ -347,4 +383,3 @@ li.L3,
 li.L5,
 li.L7,
 li.L9 { background: #eee }
-
