@@ -76,7 +76,7 @@ $api->version('v1', function ($api) use($controllers){
         $api->post('/recoverpassword', [ 'prefix' => 'users', 'uses' => $controllers['user'].'@recoverPassword']);
         $api->post('/authenticate', [ 'prefix' => 'auth', 'uses' => $controllers['auth'].'@authenticate']);
         $api->get('/user/{user}', [ 'prefix' => 'frauds', 'uses' => $controllers['user'].'@userFraud']);
-        
+        $api->get('/fraud/{fraudId}', ['uses' => $controllers['fraud'].'@fraud']);
         /**
         * User routes
         * Protected Routes
