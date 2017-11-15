@@ -17,6 +17,7 @@ use App\Api\Models\FraudAccount;
 use App\Api\Models\FraudCaseFile;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Response;
 use Dingo\Api\Exception\StoreResourceFailedException;
 
 class FraudController extends Controller
@@ -91,7 +92,7 @@ class FraudController extends Controller
 
         if(!$this->fraudCaseModel->validate($data,'create'))
         {
-            throw new StoreResourceFailedException('Could not store fraud case. Errors: '. $this->fraudCaseModel->getErrorsInLine());
+            return Response::make(['error' => $this->fraudCaseModel->getErrors()], '422'); 
         }
 
         $this->fraudCaseModel->fill($data); 
@@ -105,10 +106,10 @@ class FraudController extends Controller
             {
                 if(!$this->fraudEmailModel->validate($email,'create'))
                 {
-                    throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
+                    throw new StoreResourceFailedException('Could not store fraud email. '.  $this->fraudEmailModel->getErrorsInLine());
                 }
                 $fraud_email = FraudEmail::create($email + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                $this->fraudCaseModel->fraudEmails()->attach($fraud_email->id);
+                $this->fraudCaseModel->fraud_emails()->attach($fraud_email->id);
             }
         }
 
@@ -120,10 +121,10 @@ class FraudController extends Controller
             {
                 if(!$this->fraudAccountModel->validate($account, 'create'))
                 {
-                    throw new StoreResourceFailedException('Could not create fraud case account. Errors: '.  $this->fraudAccountModel->getErrorsInLine());
+                    throw new StoreResourceFailedException('Could not store fraud account. '.  $this->fraudAccountModel->getErrorsInLine());
                 }
                 $fraud_account = FraudAccount::create($account + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                $this->fraudCaseModel->fraudAccounts()->attach($fraud_account->id);
+                $this->fraudCaseModel->fraud_accounts()->attach($fraud_account->id);
             }
         }
         
@@ -134,10 +135,10 @@ class FraudController extends Controller
             {
                 if(!$this->fraudWebsiteModel->validate($website, 'create'))
                 {
-                    throw new StoreResourceFailedException('Could not create fraud case website. Erros: '. $this->fraudWebsiteModel->getErrorsInLine());
+                    throw new StoreResourceFailedException('Could not store fraud website. '. $this->fraudWebsiteModel->getErrorsInLine());
                 }
                 $fraud_website = FraudWebsite::create($website + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                $this->fraudCaseModel->fraudWebsites()->attach($fraud_website->id);
+                $this->fraudCaseModel->fraud_websites()->attach($fraud_website->id);
             }
         }
 
@@ -148,12 +149,13 @@ class FraudController extends Controller
             {
                 if(!$this->fraudMobileModel->validate($phone_num,'create'))
                 {
-                    throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
+                    throw new StoreResourceFailedException('Could not store fraud email. '.  $this->fraudEmailModel->getErrorsInLine());
                 }
                 $fraud_mobile = FraudMobile::create($phone_num + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                $this->fraudCaseModel->fraudMobiles()->attach($fraud_mobile->id);
+                $this->fraudCaseModel->fraud_mobiles()->attach($fraud_mobile->id);
             }
         }
+
 
         if (isset($data['fraud_file']))
         {
@@ -178,7 +180,7 @@ class FraudController extends Controller
     */
     public function showFrauds()
     {
-        return FraudCase::query()->paginate(6);
+        return FraudCase::all();
     }
 
     /**
@@ -212,7 +214,7 @@ class FraudController extends Controller
                     throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
                 }
                 $fraud_email = FraudEmail::create($email + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                $this->fraudCaseModel->fraudEmails()->attach($fraud_email->id);
+                $this->fraudCaseModel->fraud_emails()->attach($fraud_email->id);
             }
         }
 
@@ -227,7 +229,7 @@ class FraudController extends Controller
                     throw new StoreResourceFailedException('Could not create fraud case account. Errors: '.  $this->fraudAccountModel->getErrorsInLine());
                 }
                 $fraud_account = FraudAccount::create($account + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                $this->fraudCaseModel->fraudAccounts()->attach($fraud_account->id);
+                $this->fraudCaseModel->fraud_accounts()->attach($fraud_account->id);
             }
         }
         
@@ -241,7 +243,7 @@ class FraudController extends Controller
                     throw new StoreResourceFailedException('Could not create fraud case website. Erros: '. $this->fraudWebsiteModel->getErrorsInLine());
                 }
                 $fraud_website = FraudWebsite::create($website + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                $this->fraudCaseModel->fraudWebsites()->attach($fraud_website->id);
+                $this->fraudCaseModel->fraud_websites()->attach($fraud_website->id);
             }
         }
 
@@ -255,7 +257,7 @@ class FraudController extends Controller
                     throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
                 }
                 $fraud_mobile = FraudMobile::create($phone_num + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                $this->fraudCaseModel->fraudMobiles()->attach($fraud_mobile->id);
+                $this->fraudCaseModel->fraud_mobiles()->attach($fraud_mobile->id);
             }
         }
 
@@ -298,9 +300,18 @@ class FraudController extends Controller
     public function searchFraud(Request $request)
     {
         $query = $request->get('keyword');
-        return FraudCase::search($query)
-        ->paginate(3)
-        ->first();
+        return FraudCase::search($query)->get();
     }
 
+    /**
+    * Reterive a fraudcase
+    *GET frauds/{fraud}
+    * @param $request
+    * @return Response
+    */
+    public function fraud(Request $request,FraudCase $fraudCase, $id)
+    {
+        $this->fraudCaseModel = $this->fraudCaseModel::find($id);
+        return FraudCase::where('id', $id)->first();
+    }
 }

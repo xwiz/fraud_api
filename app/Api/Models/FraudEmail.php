@@ -31,7 +31,7 @@ class FraudEmail extends BaseModel
      * Relation to fraudCases
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-     public function fraudCases()
+     public function fraud_cases()
     {
         return $this->belongsToMany(FraudCase::class);
     }

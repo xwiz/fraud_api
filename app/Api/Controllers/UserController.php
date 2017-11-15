@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Response;
 use App\Api\Transformers\UserTransformer;
+use Dingo\Api\Exception\StoreResourceFailedException;
 
 
 
@@ -72,7 +73,7 @@ class UserController extends Controller
     public function userFraud(Request $request,User $user, FraudCase $fraudCase, $id)
     {
         $this->model = $this->model::find($id);
-        return FraudCase::where('user_id', $id)->paginate(5);
+        return FraudCase::where('user_id', $id)->get();
     }
 
 
@@ -98,7 +99,7 @@ class UserController extends Controller
         $this->model->fill($data);
         $this->model->save();
         return response()->json([
-            'message' => 'Congratulations, New User created Successfully!!!',
+            'message' => 'New User created successfully',
             'user' => $this->model
             ]);
     }
@@ -120,7 +121,6 @@ class UserController extends Controller
         {
             throw new StoreResourceFailedException('Could not edit user. Errors: '. $this->model->getErrorsInline());
         }
-        $data['password'] = bcrypt($data['password']);
         $this->model->fill($data);
         $this->model->save();
         return response()->json([

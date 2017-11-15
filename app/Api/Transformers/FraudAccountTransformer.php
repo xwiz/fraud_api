@@ -20,6 +20,6 @@ class FraudAccountTransformer extends BaseTransformer
     */
     public function includeFraudCase(FraudAccount $model)
     {
-        return $this->item($model->fraudCase, new FraudCaseTransformer);
+        return $this->item($model->fraud_case, new FraudCaseTransformer);
     }
 }

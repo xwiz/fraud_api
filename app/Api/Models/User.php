@@ -38,18 +38,16 @@ class User extends BaseModel
 
     public $rules = [
         'create' => [
-            'first_name' => 'min:3|required',
-            'last_name' => 'min:3|required',
-            'email' => 'email|unique:users,email|required',
-            'password'=>'min:3',
+            'first_name' => 'required|min:3',
+            'last_name' => 'required|min:3',
+            'email' => 'required|email|unique:users',
+            'password'=>'required|min:3',
             'phone_number' => 'min:11|max:15|unique:users',
         ],
         'update' => [
-            'first_name' => 'min:3',
-            'last_name' => 'min:3',
-            'password'=>'min:3',
-            'phone_number' => 'min:11|max:15|unique:users',
-            'email' => 'email|unique:users,email|required',
+            'first_name' => 'required|min:3',
+            'last_name' => 'required|min:3',
+            'phone_number' => 'min:11|max:15',
         ],
     ];
 

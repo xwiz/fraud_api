@@ -21,6 +21,7 @@
 <li><a href="#user-features">User Features</a></li>
 <li><a href="#create-new-user">Create New User</a></li>
 <li><a href="#retrieve-user-information">Retrieve User Information</a></li>
+<li><a href="#retrieve-user-all-reported-cases">Retrieve User All Reported Cases</a></li>
 <li><a href="#update-user-information">Update User Information</a></li>
 <li><a href="#delete-user-information">Delete User Information</a></li>
 </ul></li>
@@ -117,6 +118,17 @@ Response
         [
             {user}
         ]</code></pre>
+<h3 id="retrieve-user-all-reported-cases">Retrieve User All Reported Cases</h3>
+<pre><code>Endpoint:       /frauds/user/{user}
+Http method :   get
+
+Response
+    Successfull
+        Http code : 200
+        [
+            {fraudcase(s)}
+        ]
+        </code></pre>
 <h3 id="update-user-information">Update User Information</h3>
 <pre><code>Endpoint:      /users/{userId}/
 Http method:    put

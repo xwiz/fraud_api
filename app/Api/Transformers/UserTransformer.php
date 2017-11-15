@@ -11,7 +11,7 @@ use App\Api\Models\User;
  */
 class UserTransformer extends BaseTransformer
 {
-    public $availableIncludes = ['fraudCases'];
+    public $availableIncludes = ['fraud_cases'];
     public $defaultIncludes = [];
 
 
@@ -22,6 +22,6 @@ class UserTransformer extends BaseTransformer
     */
     public function includeFraudCases(User $model)
     {
-        return $this->collection($model->fraudCases, new FraudCaseTransformer);
+        return $this->collection($model->fraud_cases, new FraudCaseTransformer);
     }
 }

@@ -22,6 +22,6 @@ class FraudEmailTransformer extends BaseTransformer
     */
     public function includeFraudCase(FraudEmail $model)
     {
-        return $this->item($model->fraudCase, new FraudCaseTransformer);
+        return $this->item($model->fraud_case, new FraudCaseTransformer);
     }
 }

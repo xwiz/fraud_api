@@ -11,7 +11,7 @@ use App\Api\Models\FraudCase;
 class FraudCaseTransformer extends BaseTransformer
 {
     public $availableIncludes = [];
-    public $defaultIncludes = ['fraudEmails', 'fraudAccounts', 'fraudWebsites','fraudMobiles', 'fraudCaseFiles'];
+    public $defaultIncludes = ['fraud_emails', 'fraud_accounts', 'fraud_websites','fraud_mobiles', 'fraud_casefiles'];
     
     /**
     * Include fraudAccounts data and transform it
@@ -20,7 +20,7 @@ class FraudCaseTransformer extends BaseTransformer
     */
     public function includeFraudAccounts($model)
     {
-        return $this->collection($model->fraudAccounts, new FraudAccountTransformer);
+        return $this->collection($model->fraud_accounts, new FraudAccountTransformer);
     }
 
     /**
@@ -30,7 +30,7 @@ class FraudCaseTransformer extends BaseTransformer
     */
     public function includeFraudEmails(FraudCase $model)
     {
-        return $this->collection($model->fraudEmails, new FraudEmailTransformer);
+        return $this->collection($model->fraud_emails, new FraudEmailTransformer);
     }
 
     /**
@@ -40,7 +40,7 @@ class FraudCaseTransformer extends BaseTransformer
     */
     public function includeFraudMobiles(FraudCase $model)
     {
-        return $this->collection($model->fraudMobiles, new FraudMobileTransformer);
+        return $this->collection($model->fraud_mobiles, new FraudMobileTransformer);
     }
 
     /**
@@ -50,7 +50,7 @@ class FraudCaseTransformer extends BaseTransformer
     */
     public function includeFraudWebsites(FraudCase $model)
     {
-        return $this->collection($model->fraudWebsites, new FraudWebsiteTransformer);
+        return $this->collection($model->fraud_websites, new FraudWebsiteTransformer);
     }
 
     /**
@@ -70,7 +70,7 @@ class FraudCaseTransformer extends BaseTransformer
     */
     public function includeFraudCaseFiles(FraudCase $model)
     {
-        return $this->collection($model->fraudCaseFiles, new FraudCaseFileTransformer);
+        return $this->collection($model->fraud_casefiles, new FraudCaseFileTransformer);
     }
 
 }

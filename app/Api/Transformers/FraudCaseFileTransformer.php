@@ -20,6 +20,6 @@ class FraudCaseFileTransformer extends BaseTransformer
     */
 	public function includeFraudCaseFile($model)
 	{
-		return $this->item($model->FraudCaseFile, new FraudCaseFileTransformer);
+		return $this->item($model->fraud_casefile, new FraudCaseFileTransformer);
 	}
 }

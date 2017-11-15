@@ -89,7 +89,7 @@ class FraudCase extends BaseModel
      * Relation to itemtype
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function itemType()
+    public function item_type()
     {
         return $this->belongsTo(ItemType::class);
     }
@@ -98,7 +98,7 @@ class FraudCase extends BaseModel
      * Relation to fraudCasesFiles
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function fraudCaseFiles()
+    public function fraud_casefiles()
     {
         return $this->hasMany(FraudCaseFile::class);
     }
@@ -107,7 +107,7 @@ class FraudCase extends BaseModel
      * Relation to fraudCategory
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function fraudCategory()
+    public function fraud_category()
     {
         return $this->belongsTo(FraudCategory::class);
     }
@@ -116,7 +116,7 @@ class FraudCase extends BaseModel
      * Relation to fraudEmails
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function fraudEmails()
+    public function fraud_emails()
     {
         return $this->belongsToMany(FraudEmail::class, 'fraudcase_fraudemail', 'fraud_case_id', 'fraud_email_id');
     }
@@ -126,7 +126,7 @@ class FraudCase extends BaseModel
      * Relation to fraudMobiles
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function fraudMobiles()
+    public function fraud_mobiles()
     {
         return $this->belongsToMany(FraudMobile::class, 'fraudcase_fraudmobile', 'fraud_case_id', 'fraud_mobile_id');
     }
@@ -135,7 +135,7 @@ class FraudCase extends BaseModel
      * Relation to fraudAccounts
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function fraudAccounts()
+    public function fraud_accounts()
     {
         return $this->belongsToMany(FraudAccount::class, 'fraudaccount_fraudcase', 'fraud_case_id', 'fraud_account_id');
     }
@@ -144,7 +144,7 @@ class FraudCase extends BaseModel
      * Relation to fraudWebsites
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function fraudWebsites()
+    public function fraud_websites()
     {
         return $this->belongsToMany(FraudWebsite::class, 'fraudcase_fraudwebsite', 'fraud_case_id', 'fraud_website_id');
     }
