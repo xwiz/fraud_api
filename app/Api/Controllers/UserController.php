@@ -124,7 +124,7 @@ class UserController extends Controller
         $this->model->fill($data);
         $this->model->save();
         return response()->json([
-            'message' => 'Congratulations, Update was Successful!!!',
+            'message' => 'Update was Successful',
             'user' => $this->model
             ]);
     }

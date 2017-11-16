@@ -77,7 +77,10 @@ Functionalities to create, delete, retrieve or modify user information through t
 		Successful
 			Http code:	200
 			[
-				messsage:	New User created successfully
+				data : [
+            		messsage:	New User created successfully
+					{user}...
+				]
 			]
 		Error
 			Http code: 422
@@ -124,7 +127,10 @@ Functionalities to create, delete, retrieve or modify user information through t
         Successful
             Http code: 200
             [
-                {user}
+            	data : [
+            		messsage:	Update was successfull
+					{user}...
+				]
             ]
         Error
             Http code: 422
