@@ -14,14 +14,12 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 
 $api = app('Dingo\Api\Routing\Router');
 
- // Controllers namespaces
+/*
+|Controllers namespaces
+*/
 $controllers =[
 'auth' => 'App\Api\Controllers\AuthController',
 'user' => 'App\Api\Controllers\UserController',
@@ -43,13 +41,14 @@ $controllers =[
 
 $api->version('v1', function ($api) use($controllers){
 
-    //API routes
-    //prefix is api/v1
+    /*
+    | API routes
+    | prefix is api/v1
+    */
     $api->group(['prefix' => 'v1', 'middleware' => 'cors'], function ($api) use ($controllers){
 
         /**
         * Unprotected Routes
-        *
         *
         * Fraud Case routes
         */
@@ -76,12 +75,13 @@ $api->version('v1', function ($api) use($controllers){
         $api->post('/recoverpassword', [ 'prefix' => 'users', 'uses' => $controllers['user'].'@recoverPassword']);
         $api->post('/authenticate', [ 'prefix' => 'auth', 'uses' => $controllers['auth'].'@authenticate']);
         $api->get('/user/{user}', [ 'prefix' => 'frauds', 'uses' => $controllers['user'].'@userFraud']);
-        $api->get('/fraud/{fraudId}', ['uses' => $controllers['fraud'].'@fraud']);
+        $api->get('/fraud/{fraud}', ['uses' => $controllers['fraud'].'@fraud']);
 
         
-        /**
-        * User routes
-        * Protected Routes
+        /*
+        | User routes
+        |
+        | Protected Routes
         */
         $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)
         {
@@ -96,6 +96,8 @@ $api->version('v1', function ($api) use($controllers){
     });
 });
 
-//model bindings
+/*
+| model bindings
+*/
 Route::model('user', 'Api\Models\User');
 Route::model('fraud', 'Api\Models\FraudCase');

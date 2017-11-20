@@ -29,8 +29,8 @@ class FraudCasesTableSeeder extends BaseSeeder
         $data[] = [
             'id' => 2,
             'user_id' => 2,
-            'scam_start_date' => date("Y-m-d H:i:s"),
-            'scam_realization_date' => date("Y-m-d H:i:s"),
+            'scam_start_date' => date("Y-m-d"),
+            'scam_realization_date' => date("Y-m-d"),
             'severity_id' => 3,
             'amount_scammed_off' => '900000.00',
             'fraud_category_id' => 4,
@@ -43,8 +43,8 @@ class FraudCasesTableSeeder extends BaseSeeder
         $data[] = [
             'id' => 3,
             'user_id' => 3,
-            'scam_start_date' => date("Y-m-d H:i:s"),
-            'scam_realization_date' => date("Y-m-d H:i:s"),
+            'scam_start_date' => date("Y-m-d"),
+            'scam_realization_date' => date("Y-m-d"),
             'severity_id' => 3,
             'amount_scammed_off' => '1000000.00',
             'fraud_category_id' => 5,
@@ -57,8 +57,8 @@ class FraudCasesTableSeeder extends BaseSeeder
         $data[] = [
             'id' => 4,
             'user_id' => 4,
-            'scam_start_date' => date("Y-m-d H:i:s"),
-            'scam_realization_date' => date("Y-m-d H:i:s"),
+            'scam_start_date' => date("Y-m-d"),
+            'scam_realization_date' => date("Y-m-d"),
             'severity_id' => 1,
             'amount_scammed_off' => '1500.00',
             'fraud_category_id' => 2,
@@ -71,8 +71,8 @@ class FraudCasesTableSeeder extends BaseSeeder
         $data[] = [
             'id' => 5,
             'user_id' => 4,
-            'scam_start_date' => date("Y-m-d H:i:s"),
-            'scam_realization_date' => date("Y-m-d H:i:s"),
+            'scam_start_date' => date("Y-m-d"),
+            'scam_realization_date' => date("Y-m-d"),
             'severity_id' => 1,
             'amount_scammed_off' => '3500.00',
             'fraud_category_id' => 2,

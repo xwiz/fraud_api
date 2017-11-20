@@ -34,7 +34,7 @@ API endpoints below are listed without the base URI:
 
 ### Basic Authentication
 Basic authentication is the simple default authentication that can be used to obtain a token from the API.
-Tokens are valid for 1 hour(60 minutes) from the time obtained.
+Tokens are valid for 1 week(10080 minutes) from the time obtained.
 
 	Endpoint:		/auth/authenticate/
 	Http method:	post
@@ -49,6 +49,10 @@ Tokens are valid for 1 hour(60 minutes) from the time obtained.
 				token : string
 			]
 		Error
+			Http code : 200
+			[
+				message : User does not exist
+			]
 			Http code : 401
 			[
 				message : invalid_credentials
@@ -149,11 +153,6 @@ Functionalities to create, delete, retrieve or modify user information through t
             Http code: 200
             [
                 message : User ID ". userId ." Deleted Successfully
-            ]
-        Error
-            Http code: 422
-            [
-                message : Could not delete User. Errors...
             ]
 
 
@@ -274,17 +273,12 @@ Functionalities to create, delete, retrieve or modify users reported case throug
             [
                 message : Fraud Case ". fraudId ." Deleted Successfully;
             ]
-        Error
-            Http code: 422
-            [
-                message : Could not delete fraudcase. Errors...
-            ]
 
 ### Search for Keyword
 
 	Endpoint :		/frauds/search?keyword={keyword}
 	Http method :	get
-	Includes :		fraudcase, users
+	Includes :		fraudcase
 
 	Response
 		Successful
@@ -315,7 +309,7 @@ Functionalities to create, delete, retrieve or modify users reported case throug
 		Successful
 			Http code :	200
 			[
-				{severity}
+				{severities}
 			]
 
 ### Retrieve Item types Information

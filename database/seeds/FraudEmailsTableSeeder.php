@@ -16,7 +16,7 @@ class FraudEmailsTableSeeder extends BaseSeeder
         [
             'id' => 1,
             'fraud_case_id' => 1,
-            'email' => 'fraudatweb@hotmail.com'
+            'email' => 'fraudweb@hotmail.com'
         ];
         $data[] = 
         [

@@ -17,7 +17,7 @@ class FraudWebsitesTableSeeder extends BaseSeeder
             'id' => 1,
             'fraud_case_id' => 3,
             'website_url' => 'unitybankng.com',
-            'bank_id' => 15
+            'bank_id' => 16
         ];
         $data[] = 
         [

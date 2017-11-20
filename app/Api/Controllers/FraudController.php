@@ -156,7 +156,6 @@ class FraudController extends Controller
             }
         }
 
-
         if (isset($data['fraud_file']))
         {
             $img = Image::make($data['fraud_file'])->encode('jpg', 75);
@@ -173,7 +172,7 @@ class FraudController extends Controller
 
 
     /**
-    * Retrive all FraudCases from the storage.
+    * Retrieve all FraudCases from the storage.
     * GET /frauds
     *
     * @return Response
@@ -194,7 +193,6 @@ class FraudController extends Controller
         $this->fraudCaseModel = $this->fraudCaseModel::find($id);
         $data = $request->all();
 
-        
         if(!$this->fraudCaseModel->validate($data,'create'))
         {
             throw new StoreResourceFailedException('Could not store fraud case. Errors: '. $this->fraudCaseModel->getErrorsInLine());
@@ -202,7 +200,6 @@ class FraudController extends Controller
 
         $this->fraudCaseModel->fill($data); 
         $this->fraudCaseModel->save();
-        //$data['fraud_case_id'] = $this->fraudCaseModel->id;
 
         if(isset($data['email']))
         {
@@ -270,9 +267,8 @@ class FraudController extends Controller
             $img->save($filePath_store);
             $data['fraud_file']=$filepath;
             $fraud_file = FraudCaseFile::create(['picture_url' => $filepath ,'fraud_case_id' => $this->fraudCaseModel->id]);
-        }   
+        }
         
-
         return $this->fraudCaseModel;
     }
     

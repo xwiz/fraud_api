@@ -62,7 +62,7 @@ This will allow you to call protected endpoints that require user authentication
 
     API prefix api/vi:</code></pre>
 <h3 id="basic-authentication">Basic Authentication</h3>
-<p>Basic authentication is the simple default authentication that can be used to obtain a token from the API. Tokens are valid for 1 hour(60 minutes) from the time obtained.</p>
+<p>Basic authentication is the simple default authentication that can be used to obtain a token from the API. Tokens are valid for 1 week(10080 minutes) from the time obtained.</p>
 <pre><code>Endpoint:       /auth/authenticate/
 Http method:    post
 Body:
@@ -76,6 +76,10 @@ Response
             token : string
         ]
     Error
+        Http code : 200
+        [
+            message : User does not exist
+        ]
         Http code : 401
         [
             message : invalid_credentials
@@ -166,11 +170,6 @@ Response
         Http code: 200
         [
             message : User ID &quot;. userId .&quot; Deleted Successfully
-        ]
-    Error
-        Http code: 422
-        [
-            message : Could not delete User. Errors...
         ]</code></pre>
 <h2 id="fraud-case">Fraud Case</h2>
 <p>Functionalities to create, delete, retrieve or modify users reported case through the API.</p>
@@ -279,16 +278,11 @@ Response
         Http code: 200
         [
             message : Fraud Case &quot;. fraudId .&quot; Deleted Successfully;
-        ]
-    Error
-        Http code: 422
-        [
-            message : Could not delete fraudcase. Errors...
         ]</code></pre>
 <h3 id="search-for-keyword">Search for Keyword</h3>
 <pre><code>Endpoint :      /frauds/search?keyword={keyword}
 Http method :   get
-Includes :      fraudcase, users
+Includes :      fraudcase
 
 Response
     Successful
@@ -314,7 +308,7 @@ Response
     Successful
         Http code : 200
         [
-            {severity}
+            {severities}
         ]</code></pre>
 <h3 id="retrieve-item-types-information">Retrieve Item types Information</h3>
 <pre><code>Endpoint :      /itemtypes
