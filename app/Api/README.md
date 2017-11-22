@@ -336,3 +336,22 @@ Functionalities to create, delete, retrieve or modify users reported case throug
 				{fraudcategories}
 			]
 
+### Flag A FraudCase Report
+
+	Endpoint : 		/users/comment
+	Http method :	post
+
+	Body : 
+		user_id:	    integer
+		comment:	    string
+		fraud_case_id:	integer
+
+	Response
+		Successful
+			Http code:	200
+			[
+				data : [
+            		messsage:	Comment Saved Successfully
+            		{comment}
+				]
+			]

@@ -35,6 +35,7 @@
 <li><a href="#retrieve-severity-information">Retrieve Severity Information</a></li>
 <li><a href="#retrieve-item-types-information">Retrieve Item types Information</a></li>
 <li><a href="#retrieve-fraud-categories-information">Retrieve Fraud Categories Information</a></li>
+<li><a href="#flag-a-fraudcase-report">Flag A FraudCase Report</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -329,6 +330,24 @@ Response
         Http code : 200
         [
             {fraudcategories}
+        ]</code></pre>
+<h3 id="flag-a-fraudcase-report">Flag A FraudCase Report</h3>
+<pre><code>Endpoint :      /users/comment
+Http method :   post
+
+Body : 
+    user_id:        integer
+    comment:        string
+    fraud_case_id:  integer
+
+Response
+    Successful
+        Http code:  200
+        [
+            data : [
+                messsage:   Comment Saved Successfully
+                {comment}
+            ]
         ]</code></pre>
 </body>
 </html>

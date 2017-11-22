@@ -60,4 +60,13 @@ class User extends BaseModel
     {
         return $this->hasMany(FraudCase::class);
     }
+
+    /**
+     * Relation to flags
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function flags()
+    {
+        return $this->hasMany(Flag::class);
+    }
 }

@@ -25,6 +25,7 @@ $controllers =[
 'user' => 'App\Api\Controllers\UserController',
 'fraud' => 'App\Api\Controllers\FraudController',
 'home' => 'App\Api\Controllers\HomeController',
+'flag' => 'App\Api\Controllers\FlagController',
 ];
 
 
@@ -77,6 +78,7 @@ $api->version('v1', function ($api) use($controllers){
         $api->get('/user/{user}', [ 'prefix' => 'frauds', 'uses' => $controllers['user'].'@userFraud']);
         $api->get('/fraud/{fraud}', ['uses' => $controllers['fraud'].'@fraud']);
 
+        $api->post('/comment', ['uses' => $controllers['flag'].'@flagFraud']);
         
         /*
         | User routes
@@ -87,6 +89,7 @@ $api->version('v1', function ($api) use($controllers){
         {
             $api->group(['prefix' => 'users'], function($api) use ($controllers)
             {
+
                 $api->get('/me', ['uses'=> $controllers['user'].'@index']);
                 $api->put('{user}', ['uses' =>  $controllers['user'] .'@updateUser']);
                 $api->post('/me', ['uses' =>  $controllers['user'] .'@getAuthenticatedUser']);

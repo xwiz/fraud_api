@@ -148,4 +148,13 @@ class FraudCase extends BaseModel
     {
         return $this->belongsToMany(FraudWebsite::class, 'fraudcase_fraudwebsite', 'fraud_case_id', 'fraud_website_id');
     }
+
+    /**
+     * Relation to flags
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function flags()
+    {
+        return $this->hasMany(Flag::class);
+    }
 }
