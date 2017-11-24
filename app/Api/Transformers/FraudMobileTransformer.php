@@ -14,7 +14,7 @@ class FraudMobileTransformer extends BaseTransformer
     public $defaultIncludes = [];
 
     /*
-    * Include fraudCase data and transform it
+    * Include FraudCase data and transform it
     * @param Model $model
     * @return \League\Fractal\Resource\item
     */

@@ -150,11 +150,11 @@ class FraudCase extends BaseModel
     }
 
     /**
-     * Relation to flags
+     * Relation to comments
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function flags()
+    public function comments()
     {
-        return $this->hasMany(Flag::class);
+        return $this->hasMany(Comment::class);
     }
 }

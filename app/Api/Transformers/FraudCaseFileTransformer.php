@@ -15,7 +15,7 @@ class FraudCaseFileTransformer extends BaseTransformer
 
 	/**
     * Include FraudCaseFile data and transform it
-    * @param BaseModel $model
+    * @param Model $model
     * @return \League\Fractal\Resource\item
     */
 	public function includeFraudCaseFile($model)

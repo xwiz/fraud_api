@@ -89,7 +89,6 @@ class FraudController extends Controller
     public function storeFraud(Request $request, FraudCaseFile $fraudCaseFile, FraudAccount $fraudAccount, FraudCase $fraudCase, FraudEmail $fraudEmail, FraudWebsite $fraudWebsite, FraudMobile $fraudMobile)
     {
         $data = $request->except('_token');
-
         if(!$this->fraudCaseModel->validate($data,'create'))
         {
             return Response::make(['error' => $this->fraudCaseModel->getErrors()], '422'); 
@@ -164,10 +163,12 @@ class FraudController extends Controller
             $filePath_store = $_SERVER['DOCUMENT_ROOT'].'/files/fraud_file/'.$filename;
             $img->save($filePath_store);
             $data['fraud_file']=$filepath;
-            $fraud_file = FraudCaseFile::create(['picture_url' => $filepath ,'fraud_case_id' => $this->fraudCaseModel->id]);
+            $fraud_file = FraudCaseFile::create(['picture_url' => $filepath ,'is_fraudster_picture' => $data['is_fraudster_picture'], 'fraud_case_id' => $this->fraudCaseModel->id]);
         }
 
         return $this->fraudCaseModel;
+
+
     }
 
 

@@ -14,13 +14,6 @@ class FraudWebsite extends BaseModel
     */
     protected $fillable = ['fraud_case_id', 'website_url','bank_id'];
 
-     /**
-     * Default hidden attributes
-     * This attribute will be excluded from JSON
-     * @var array
-     */
-    protected $hidden = ['updated_at', 'created_at', 'pivot'];
-
     public $rules = [
         'create' => [],
         'update' => [],

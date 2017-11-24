@@ -25,7 +25,7 @@ $controllers =[
 'user' => 'App\Api\Controllers\UserController',
 'fraud' => 'App\Api\Controllers\FraudController',
 'home' => 'App\Api\Controllers\HomeController',
-'flag' => 'App\Api\Controllers\FlagController',
+'flag' => 'App\Api\Controllers\CommentController',
 ];
 
 
@@ -57,8 +57,8 @@ $api->version('v1', function ($api) use($controllers){
         {
             $api->get('/', [ 'uses' => $controllers['fraud'].'@showFrauds']);
             $api->post('/', [ 'uses' => $controllers['fraud'].'@storeFraud']);
-            $api->put('{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
             $api->get('search', [ 'uses' => $controllers['fraud'].'@searchFraud']);
+            $api->put('{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
             $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
 
 
@@ -68,17 +68,17 @@ $api->version('v1', function ($api) use($controllers){
 
 
         $api->get('/banks', [ 'uses' => $controllers['home'].'@getBanks']);
-        $api->get('/severities', [ 'uses' => $controllers['home'].'@getSeverities']);
         $api->get('/itemtypes', [ 'uses' => $controllers['home'].'@getItemTypes']);
-
-        
-        $api->post('/', [ 'prefix' => 'users','uses' => $controllers['user'].'@storeUser']);
-        $api->post('/recoverpassword', [ 'prefix' => 'users', 'uses' => $controllers['user'].'@recoverPassword']);
-        $api->post('/authenticate', [ 'prefix' => 'auth', 'uses' => $controllers['auth'].'@authenticate']);
-        $api->get('/user/{user}', [ 'prefix' => 'frauds', 'uses' => $controllers['user'].'@userFraud']);
-        $api->get('/fraud/{fraud}', ['uses' => $controllers['fraud'].'@fraud']);
+        $api->get('/severities', [ 'uses' => $controllers['home'].'@getSeverities']);
 
         $api->post('/comment', ['uses' => $controllers['flag'].'@flagFraud']);
+        
+        $api->get('/fraud/{fraud}', ['uses' => $controllers['fraud'].'@fraud']);
+        $api->post('/', [ 'prefix' => 'users','uses' => $controllers['user'].'@storeUser']);
+        $api->get('/user/{user}', [ 'prefix' => 'frauds', 'uses' => $controllers['user'].'@userFraud']);
+        $api->post('/authenticate', [ 'prefix' => 'auth', 'uses' => $controllers['auth'].'@authenticate']);
+        $api->post('/recoverpassword', [ 'prefix' => 'users', 'uses' => $controllers['user'].'@recoverPassword']);
+
         
         /*
         | User routes
@@ -92,8 +92,8 @@ $api->version('v1', function ($api) use($controllers){
 
                 $api->get('/me', ['uses'=> $controllers['user'].'@index']);
                 $api->put('{user}', ['uses' =>  $controllers['user'] .'@updateUser']);
-                $api->post('/me', ['uses' =>  $controllers['user'] .'@getAuthenticatedUser']);
                 $api->delete('{user}', [ 'uses' =>  $controllers['user'] .'@destroyUser']); 
+                $api->post('/me', ['uses' =>  $controllers['user'] .'@getAuthenticatedUser']);
             });
         });
     });

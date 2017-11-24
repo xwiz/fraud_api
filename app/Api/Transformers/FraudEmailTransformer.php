@@ -15,9 +15,8 @@ class FraudEmailTransformer extends BaseTransformer
 
 
     /**
-    * Include fraudCase data and transform it
-    * Include user email data and transform it
-    * @param BaseModel $model
+    * Include FraudEmail data and transform it
+    * @param Model $model
     * @return \League\Fractal\Resource\item
     */
     public function includeFraudCase(FraudEmail $model)

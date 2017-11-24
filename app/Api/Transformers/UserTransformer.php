@@ -16,7 +16,7 @@ class UserTransformer extends BaseTransformer
 
 
     /**
-    * Include fraudCase data and transform it
+    * Include FraudCase data and transform it
     * @param Model $model
     * @return \League\Fractal\Resource\collection
     */

@@ -54,7 +54,7 @@ class BaseModel extends Model
      * This attribute will be excluded from JSON
      * @var array
      */
-    protected $hidden = ['pivot', 'password','pivot'];
+    protected $hidden = ['password','pivot'];
 
 
     /**

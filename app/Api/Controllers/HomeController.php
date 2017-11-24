@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 use Dingo\Api\Routing\Helpers;
 use App\Api\Models\FraudCategory;
 use App\Http\Controllers\Controller;
-use App\Api\Transformers\BankTransformer;
-use App\Api\Transformers\SeverityTransformer;
-use App\Api\Transformers\ItemTypeTransformer;
-use App\Api\Transformers\FraudCaseTransformer;
-use App\Api\Transformers\FraudCategoryTransformer;
 
 
 

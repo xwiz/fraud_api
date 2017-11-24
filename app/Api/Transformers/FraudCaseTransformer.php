@@ -14,8 +14,8 @@ class FraudCaseTransformer extends BaseTransformer
     public $defaultIncludes = ['fraud_emails', 'fraud_accounts', 'fraud_websites','fraud_mobiles', 'fraud_casefiles'];
     
     /**
-    * Include fraudAccounts data and transform it
-    * @param BaseModel $model
+    * Include FraudAccounts data and transform it
+    * @param Model $model
     * @return \League\Fractal\Resource\collection
     */
     public function includeFraudAccounts($model)
@@ -24,8 +24,8 @@ class FraudCaseTransformer extends BaseTransformer
     }
 
     /**
-    * Include fraudEmails data and transform it
-    * @param BaseModel $model
+    * Include FraudEmails data and transform it
+    * @param Model $model
     * @return \League\Fractal\Resource\collection
     */
     public function includeFraudEmails(FraudCase $model)
@@ -34,8 +34,8 @@ class FraudCaseTransformer extends BaseTransformer
     }
 
     /**
-    * Include fraudMobiles data and transform it
-    * @param BaseModel $model
+    * Include FraudMobiles data and transform it
+    * @param Model $model
     * @return \League\Fractal\Resource\collection
     */
     public function includeFraudMobiles(FraudCase $model)
@@ -44,8 +44,8 @@ class FraudCaseTransformer extends BaseTransformer
     }
 
     /**
-    * Include fraudWebsites data and transform it
-    * @param BaseModel $model
+    * Include FraudWebsites data and transform it
+    * @param Model $model
     * @return \League\Fractal\Resource\collection
     */
     public function includeFraudWebsites(FraudCase $model)
@@ -55,7 +55,7 @@ class FraudCaseTransformer extends BaseTransformer
 
     /**
     * Include User data and transform it
-    * @param BaseModel $model
+    * @param Model $model
     * @return \League\Fractal\Resource\item
     */
     public function includeUser(FraudCase $model)
@@ -64,7 +64,7 @@ class FraudCaseTransformer extends BaseTransformer
     }
 
     /**
-    * Include fraudCaseFiles data and transform it
+    * Include FraudCaseFiles data and transform it
     * @param Model $model
     * @return \League\Fractal\Resource\collection
     */

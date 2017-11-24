@@ -17,14 +17,6 @@ class Authentication extends BaseModel
      */
     protected $table = 'authentications';
 
-     /**
-     * Default hidden attributes
-     * This attribute will be excluded from JSON
-     * @var array
-     */
-    protected $hidden = ['updated_at', 'created_at', 'pivot'];
-
-
     /**
      * Allowed fields
      *

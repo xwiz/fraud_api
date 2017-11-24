@@ -16,8 +16,8 @@ class CreateFraudCasesTable extends Migration
         Schema::create('fraud_cases', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->dateTime('scam_start_date')->nullable();
-            $table->dateTime('scam_realization_date')->nullable();
+            $table->date('scam_start_date')->nullable();
+            $table->date('scam_realization_date')->nullable();
             $table->integer('severity_id')->unsigned();
             $table->double('amount_scammed_off', 10, 2)->unsigned();
             $table->integer('fraud_category_id')->unsigned()->index();

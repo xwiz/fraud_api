@@ -11,7 +11,6 @@ use Dingo\Api\Routing\Helpers;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Response;
-use App\Api\Transformers\UserTransformer;
 use Dingo\Api\Exception\StoreResourceFailedException;
 
 

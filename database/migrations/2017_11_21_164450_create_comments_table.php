@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFraudCaseFilesTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateFraudCaseFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fraud_case_files', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('fraud_case_id')->unsigned()->index();
-            $table->string('picture_url', 255)->nullable();
-            $table->boolean('is_fraudster_picture')->default(0);
+            $table->string('comment', 500);
+            $table->integer('user_id')->unsigned();
+            $table->integer('fraud_case_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('fraud_case_id')->references('id')->on('fraud_cases')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
@@ -30,6 +32,6 @@ class CreateFraudCaseFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fraud_case_files');
+        Schema::dropIfExists('comments');
     }
 }

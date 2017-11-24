@@ -14,13 +14,6 @@ class FraudAccount extends BaseModel
     */
     protected $fillable = ['account_no', 'bank_id', 'account_name', 'fraud_case_id'];
 
-     /**
-     * Default hidden attributes
-     * This attribute will be excluded from JSON
-     * @var array
-     */
-    protected $hidden = ['updated_at', 'created_at', 'pivot'];
-
     public $rules = [
         'create' => [
             'account_no' => 'min:10|max:10',
