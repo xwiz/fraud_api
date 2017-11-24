@@ -47,7 +47,6 @@ class User extends BaseModel
         'update' => [
             'first_name' => 'required|min:3',
             'last_name' => 'required|min:3',
-            'phone_number' => 'min:11|max:15',
         ],
     ];
 

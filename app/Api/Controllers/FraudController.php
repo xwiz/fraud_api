@@ -194,7 +194,7 @@ class FraudController extends Controller
         $this->fraudCaseModel = $this->fraudCaseModel::find($id);
         $data = $request->all();
 
-        if(!$this->fraudCaseModel->validate($data,'create'))
+        if(!$this->fraudCaseModel->validate($data,'update'))
         {
             throw new StoreResourceFailedException('Could not store fraud case. Errors: '. $this->fraudCaseModel->getErrorsInLine());
         }
@@ -207,7 +207,7 @@ class FraudController extends Controller
             $emails = json_decode($data['email'], true);
             foreach($emails as $email)
             {
-                if(!$this->fraudEmailModel->validate($email,'create'))
+                if(!$this->fraudEmailModel->validate($email,'update'))
                 {
                     throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
                 }
@@ -222,7 +222,7 @@ class FraudController extends Controller
             $accounts = json_decode($data['account'], true);
             foreach($accounts as $account)
             {
-                if(!$this->fraudAccountModel->validate($account, 'create'))
+                if(!$this->fraudAccountModel->validate($account, 'update'))
                 {
                     throw new StoreResourceFailedException('Could not create fraud case account. Errors: '.  $this->fraudAccountModel->getErrorsInLine());
                 }
@@ -236,7 +236,7 @@ class FraudController extends Controller
             $websites = json_decode($data['website_url'], true);
             foreach($websites as $website)
             {
-                if(!$this->fraudWebsiteModel->validate($website, 'create'))
+                if(!$this->fraudWebsiteModel->validate($website, 'update'))
                 {
                     throw new StoreResourceFailedException('Could not create fraud case website. Erros: '. $this->fraudWebsiteModel->getErrorsInLine());
                 }
@@ -250,7 +250,7 @@ class FraudController extends Controller
             $phones = json_decode($data['phone_number'], true);
             foreach($phones as $phone_num)
             {
-                if(!$this->fraudMobileModel->validate($phone_num,'create'))
+                if(!$this->fraudMobileModel->validate($phone_num,'update'))
                 {
                     throw new StoreResourceFailedException('Could not create fraud case email. Errors: '.  $this->fraudEmailModel->getErrorsInLine());
                 }
