@@ -6,6 +6,9 @@ use API;
 use Image;
 use JWTAUth;
 use Validator;
+use Storage;
+use File;
+use Log;
 use App\Api\Models\User;
 use Illuminate\Http\Request;
 use App\Api\Models\FraudCase;
@@ -159,8 +162,14 @@ class FraudController extends Controller
         {
             $img = Image::make($data['fraud_file'])->encode('jpg', 75);
             $filename = time().'.jpg';
-            $filepath = 'files/fraud_file/'.$filename;
-            $filePath_store = $_SERVER['DOCUMENT_ROOT'].'/files/fraud_file/'.$filename;
+            $filepath = '/files/fraud_file/'.$filename;
+            $filepaths = $_SERVER['DOCUMENT_ROOT'].'/files/fraud_file/';
+                
+            if(!File::exists($filepaths)){
+                File::makeDirectory($filepaths, $mode = 0777, true, true);
+            }
+
+            $filePath_store = $filepaths.$filename;
             $img->save($filePath_store);
             $data['fraud_file']=$filepath;
             $fraud_file = FraudCaseFile::create(['picture_url' => $filepath ,'is_fraudster_picture' => $data['is_fraudster_picture'], 'fraud_case_id' => $this->fraudCaseModel->id]);
