@@ -72,7 +72,7 @@ class UserController extends Controller
     public function userFraud(Request $request,User $user, FraudCase $fraudCase, $id)
     {
         $this->model = $this->model::find($id);
-        return FraudCase::where('user_id', $id)->get();
+        return FraudCase::where('user_id', $id)->orderBy('id', 'desc')->get();
     }
 
 

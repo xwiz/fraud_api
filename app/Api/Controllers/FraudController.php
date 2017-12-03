@@ -160,16 +160,26 @@ class FraudController extends Controller
 
         if (isset($data['fraud_file']))
         {
+            // generate and concatenate 5 random characters to save as filename
+            $sufix = array ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U');
+            $text =  $sufix[rand(0, 20)] . $sufix[rand(5, 17)] . $sufix[rand(0, 6)] . $sufix[rand(9, 19)] .  $sufix[rand(15, 20)];
+
             $img = Image::make($data['fraud_file'])->encode('jpg', 75);
-            $filename = time().'.jpg';
+
+            // concatenate random character with time and file extension
+            $filename = $text . time().'.jpg';
+
             $filepath = '/files/fraud_file/'.$filename;
-            $filepaths = $_SERVER['DOCUMENT_ROOT'].'/files/fraud_file/';
-                
-            if(!File::exists($filepaths)){
-                File::makeDirectory($filepaths, $mode = 0777, true, true);
+            // get the public folder directory
+            $directorypath = public_path('/files/fraud_file/');
+
+            // if subdirectory ($directorypath) doesnt exist, create one 
+            if(!File::exists($directorypath)){
+                File::makeDirectory($directorypath, 0777, true);
             }
 
-            $filePath_store = $filepaths.$filename;
+            //store file in created directory
+            $filePath_store = $directorypath.$filename;
             $img->save($filePath_store);
             $data['fraud_file']=$filepath;
             $fraud_file = FraudCaseFile::create(['picture_url' => $filepath ,'is_fraudster_picture' => $data['is_fraudster_picture'], 'fraud_case_id' => $this->fraudCaseModel->id]);
@@ -189,7 +199,7 @@ class FraudController extends Controller
     */
     public function showFrauds()
     {
-        return FraudCase::all();
+        return FraudCase::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -270,10 +280,15 @@ class FraudController extends Controller
 
         if (isset($data['fraud_file']))
         {
+             // generate and concatenate 5 random characters to save as filename
+            $sufix = array ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U');
+            $text =  $sufix[rand(0, 20)] . $sufix[rand(5, 17)] . $sufix[rand(0, 6)] . $sufix[rand(9, 19)] .  $sufix[rand(15, 20)];
+
             $img = Image::make($data['fraud_file'])->encode('jpg', 75);
-            $filename = time().'.jpg';
+            $filename = $text . time().'.jpg';
+            
             $filepath = 'files/fraud_file/'.$filename;
-            $filePath_store = $_SERVER['DOCUMENT_ROOT'].'/files/fraud_file/'.$filename;
+            $filePath_store = public_path('/files/fraud_file/').$filename;
             $img->save($filePath_store);
             $data['fraud_file']=$filepath;
             $fraud_file = FraudCaseFile::create(['picture_url' => $filepath ,'fraud_case_id' => $this->fraudCaseModel->id]);
@@ -306,7 +321,7 @@ class FraudController extends Controller
     public function searchFraud(Request $request)
     {
         $query = $request->get('keyword');
-        return FraudCase::search($query)->get();
+        return FraudCase::search($query)->orderBy('id', 'desc')->get();
     }
 
     /**
