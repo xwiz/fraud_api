@@ -14,6 +14,7 @@ class FraudEmail extends BaseModel
     protected $fillable = ['fraud_case_id', 'email'];
 
     public $rules = [
+    
         'create' => [
             'email' => 'email|max:50',
         ],

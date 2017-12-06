@@ -103,6 +103,14 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+
+        'email' => [
+            'email' => 'The Email must be a valid Email',
+        ],
+
+        'account_name' => [
+            'alpha' => 'Account Name may only contain letters',
+        ],
     ],
 
     /*
@@ -118,6 +126,7 @@ return [
 
     'attributes' => [
         'phone_number' => 'number',
+        'amount_scammed_off' => 'amount involved',
     ],
 
 ];

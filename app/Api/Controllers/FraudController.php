@@ -97,7 +97,7 @@ class FraudController extends Controller
             return Response::make(['error' => $this->fraudCaseModel->getErrors()], '422'); 
         }
 
-        $this->fraudCaseModel->fill($data); 
+        $this->fraudCaseModel->fill($data);
         $this->fraudCaseModel->save(); 
         $data['fraud_case_id'] = $this->fraudCaseModel->id;
         
@@ -151,7 +151,7 @@ class FraudController extends Controller
             {
                 if(!$this->fraudMobileModel->validate($phone_num,'create'))
                 {
-                    throw new StoreResourceFailedException('Could not store fraud email. '.  $this->fraudEmailModel->getErrorsInLine());
+                    throw new StoreResourceFailedException('Could not store fraud phone. '.  $this->fraudEmailModel->getErrorsInLine());
                 }
                 $fraud_mobile = FraudMobile::create($phone_num + ['fraud_case_id' => $this->fraudCaseModel->id]);
                 $this->fraudCaseModel->fraud_mobiles()->attach($fraud_mobile->id);
@@ -164,14 +164,14 @@ class FraudController extends Controller
             $sufix = array ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U');
             $text =  $sufix[rand(0, 20)] . $sufix[rand(5, 17)] . $sufix[rand(0, 6)] . $sufix[rand(9, 19)] .  $sufix[rand(15, 20)];
 
-            $img = Image::make($data['fraud_file'])->encode('jpg', 75);
+            $img = Image::make($data['fraud_file'])->orientate();
 
             // concatenate random character with time and file extension
             $filename = $text . time().'.jpg';
 
-            $filepath = '/files/fraud_file/'.$filename;
+            $filepath = 'files/fraud_file/'.$filename;
             // get the public folder directory
-            $directorypath = public_path('/files/fraud_file/');
+            $directorypath = public_path('files/fraud_file/');
 
             // if subdirectory ($directorypath) doesnt exist, create one 
             if(!File::exists($directorypath)){
@@ -186,8 +186,6 @@ class FraudController extends Controller
         }
 
         return $this->fraudCaseModel;
-
-
     }
 
 
@@ -284,11 +282,11 @@ class FraudController extends Controller
             $sufix = array ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U');
             $text =  $sufix[rand(0, 20)] . $sufix[rand(5, 17)] . $sufix[rand(0, 6)] . $sufix[rand(9, 19)] .  $sufix[rand(15, 20)];
 
-            $img = Image::make($data['fraud_file'])->encode('jpg', 75);
+            $img = Image::make($data['fraud_file'])->orientate();
             $filename = $text . time().'.jpg';
             
             $filepath = 'files/fraud_file/'.$filename;
-            $filePath_store = public_path('/files/fraud_file/').$filename;
+            $filePath_store = public_path('files/fraud_file/').$filename;
             $img->save($filePath_store);
             $data['fraud_file']=$filepath;
             $fraud_file = FraudCaseFile::create(['picture_url' => $filepath ,'fraud_case_id' => $this->fraudCaseModel->id]);
@@ -335,4 +333,97 @@ class FraudController extends Controller
         $this->fraudCaseModel = $this->fraudCaseModel::find($id);
         return FraudCase::where('id', $id)->first();
     }
-}
+
+
+    public function dataValidated(Request $request, FraudCaseFile $fraudCaseFile, FraudAccount $fraudAccount, FraudCase $fraudCase, FraudEmail $fraudEmail, FraudWebsite $fraudWebsite, FraudMobile $fraudMobile, $page_id)
+    {
+        $data = $request->except('_token');
+
+
+        if($page_id == 1){
+            if(!$this->fraudCaseModel->validate($data,'create1'))
+            {
+                return Response::json(['error' => $this->fraudCaseModel->getErrors()], '422');           
+            }
+           
+
+            if(isset($data['emailData']))
+            {
+                $emails = json_decode($data['emailData'], true);
+                foreach($emails as $email)
+                {
+                    if(!$this->fraudEmailModel->validate($email,'create'))
+                    {
+                        return Response::make(['error' => $this->fraudEmailModel->getErrors()], '422');
+                    }
+                    
+                }
+            }
+            
+
+            if(isset($data['phoneData']))
+            {
+                $phones = json_decode($data['phoneData'], true);
+                foreach($phones as $phone_num)
+                {
+                    if(!$this->fraudMobileModel->validate($phone_num,'create'))
+                    {
+                        return Response::make(['error' => $this->fraudMobileModel->getErrors()], '422');
+                    }
+                    
+                }
+            }
+        }
+
+
+        else if($page_id == 2){
+
+            if(!$this->fraudCaseModel->validate($data,'create2'))
+            {
+                return Response::make(['error' => $this->fraudCaseModel->getErrors()], '422');           
+            }
+            
+            if(isset($data['accountData']))
+            {
+            //todo: checks if json is passed
+                $accounts = json_decode($data['accountData'], true);
+                foreach($accounts as $account)
+                {
+                    if(!$this->fraudAccountModel->validate($account, 'create'))
+                    {
+                        return Response::make(['error' => $this->fraudAccountModel->getErrors()], '422');
+                    }
+                }
+            }
+        }
+        else if($page_id == 3){
+
+            if(!$this->fraudCaseModel->validate($data,'create3'))
+            {
+                return Response::make(['error' => $this->fraudCaseModel->getErrors()], '422');           
+            }
+        }
+        else if($page_id == 4){
+
+            if(isset($data['websiteData']))
+            {
+                $websites = json_decode($data['websiteData'], true);
+                foreach($websites as $website)
+                {
+                    if(!$this->fraudWebsiteModel->validate($website, 'create'))
+                    {
+                        return Response::make(['error' => $this->fraudWebsiteModel->getErrors()], '422');
+                    }
+                    $fraud_website = FraudWebsite::create($website + ['fraud_case_id' => $this->fraudCaseModel->id]);
+                    $this->fraudCaseModel->fraud_websites()->attach($fraud_website->id);
+                }
+            }
+        }
+        else if($page_id == 5)
+
+            if(!$this->fraudCaseModel->validate($data,'create4'))
+            {
+                return Response::make(['error' => $this->fraudCaseModel->getErrors()], '422'); 
+            }
+        }
+    }

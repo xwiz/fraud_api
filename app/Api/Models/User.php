@@ -42,7 +42,7 @@ class User extends BaseModel
             'last_name' => 'required|min:3',
             'email' => 'required|email|unique:users',
             'password'=>'required|min:3',
-            'phone_number' => 'min:11|max:15|unique:users',
+            'phone_number' => 'digits:11|unique:users',
         ],
         'update' => [
             'first_name' => 'required|min:3',

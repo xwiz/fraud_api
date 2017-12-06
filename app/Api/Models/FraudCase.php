@@ -17,24 +17,24 @@ class FraudCase extends BaseModel
      * @var array
      */
     protected $searchable = [
-        'columns' => [
-            'users.first_name' =>9,
-            'users.last_name' => 9,
-            'fraud_emails.email' => 9,
-            'fraud_cases.scammer_name' => 10,
-            'fraud_accounts.account_no' => 10,
-            'fraud_mobiles.phone_number' => 10,
-            'fraud_websites.website_url' => 10,
-            'fraud_accounts.account_name' => 10,
-            'fraud_cases.scammer_real_name' => 10,
-        ],
-        'joins' => [
-            'users' => ['fraud_cases.user_id', 'users.id'],
-            'fraud_emails' => ['fraud_cases.id','fraud_emails.fraud_case_id'],
-            'fraud_mobiles' => ['fraud_cases.id','fraud_mobiles.fraud_case_id'],
-            'fraud_accounts' => ['fraud_cases.id','fraud_accounts.fraud_case_id'],
-            'fraud_websites' => ['fraud_cases.id','fraud_websites.fraud_case_id'],
-        ],  
+    'columns' => [
+        'users.first_name' =>9,
+        'users.last_name' => 9,
+        'fraud_emails.email' => 9,
+        'fraud_cases.scammer_name' => 10,
+        'fraud_accounts.account_no' => 10,
+        'fraud_mobiles.phone_number' => 10,
+        'fraud_websites.website_url' => 10,
+        'fraud_accounts.account_name' => 10,
+        'fraud_cases.scammer_real_name' => 10,
+    ],
+    'joins' => [
+        'users' => ['fraud_cases.user_id', 'users.id'],
+        'fraud_emails' => ['fraud_cases.id','fraud_emails.fraud_case_id'],
+        'fraud_mobiles' => ['fraud_cases.id','fraud_mobiles.fraud_case_id'],
+        'fraud_accounts' => ['fraud_cases.id','fraud_accounts.fraud_case_id'],
+        'fraud_websites' => ['fraud_cases.id','fraud_websites.fraud_case_id'],
+    ],  
 
     ];
 
@@ -52,16 +52,23 @@ class FraudCase extends BaseModel
     * @var array
     */
     protected $fillable = [
-        'user_id', 'scam_start_date', 'scam_realization_date','severity_id', 'amount_scammed_off', 'fraud_category_id', 'scammer_name', 'scammer_real_name', 'item_type_id', 'item_name'
+    'user_id', 'scam_start_date', 'scam_realization_date','severity_id', 'amount_scammed_off', 'fraud_category_id', 'scammer_name', 'scammer_real_name', 'item_type_id', 'item_name'
     ];
 
     public $rules = [
-        'create' => [
-            'amount_scammed_off' => 'numeric',
-            'item_name' => 'max:150',
+    
+        'create' => [],
+
+        'create1' => [
+            'scammer_name' => 'required',
         ],
-        'update' => [
-            'amount_scammed_off' => 'numeric',
+
+        'create2' => [
+            'amount_scammed_off' => 'required|numeric',
+        ],
+        'create3' => [],
+
+        'create4' => [
             'item_name' => 'max:150',
         ],
     ];

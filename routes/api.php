@@ -57,6 +57,7 @@ $api->version('v1', function ($api) use($controllers){
         {
             $api->get('/', [ 'uses' => $controllers['fraud'].'@showFrauds']);
             $api->post('/', [ 'uses' => $controllers['fraud'].'@storeFraud']);
+            // 
             $api->get('search', [ 'uses' => $controllers['fraud'].'@searchFraud']);
             $api->put('{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
             $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
@@ -66,6 +67,7 @@ $api->version('v1', function ($api) use($controllers){
         });
 
 
+        $api->post('/validdata/{id}', [ 'uses' => $controllers['fraud'].'@dataValidated']);
 
         $api->get('/banks', [ 'uses' => $controllers['home'].'@getBanks']);
         $api->get('/itemtypes', [ 'uses' => $controllers['home'].'@getItemTypes']);

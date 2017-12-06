@@ -15,7 +15,7 @@ class FraudMobile extends BaseModel
 
     public $rules = [
         'create' => [
-            'phone_number' => 'min:11|max:15',
+            'phone_number' => 'digits:11',
         ],
         'update' => [],
     ];
