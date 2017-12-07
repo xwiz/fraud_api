@@ -71,7 +71,8 @@ class UserController extends Controller
     */
     public function userFraud(Request $request,User $user, FraudCase $fraudCase, $id)
     {
-        $this->model = $this->model::find($id);
+    //     $this->model = $this->model::find($id);
+    //     $counted = FraudCase::where('user_id', $id)->count();
         return FraudCase::where('user_id', $id)->orderBy('id', 'desc')->get();
     }
 

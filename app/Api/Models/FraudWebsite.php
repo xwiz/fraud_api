@@ -12,10 +12,13 @@ class FraudWebsite extends BaseModel
     *
     * @var array
     */
-    protected $fillable = ['fraud_case_id', 'website_url','bank_id'];
+    protected $fillable = ['fraud_case_id', 'website_url','bank_id', 'nonphishing_url'];
 
     public $rules = [
-        'create' => [],
+        'create' => [
+            'website_url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+            'nonphishing_url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+        ],
         'update' => [],
     ];
 

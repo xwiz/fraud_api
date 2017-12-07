@@ -414,8 +414,6 @@ class FraudController extends Controller
                     {
                         return Response::make(['error' => $this->fraudWebsiteModel->getErrors()], '422');
                     }
-                    $fraud_website = FraudWebsite::create($website + ['fraud_case_id' => $this->fraudCaseModel->id]);
-                    $this->fraudCaseModel->fraud_websites()->attach($fraud_website->id);
                 }
             }
         }

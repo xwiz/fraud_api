@@ -111,6 +111,14 @@ return [
         'account_name' => [
             'alpha' => 'Account Name may only contain letters',
         ],
+
+        'nonphishing_url' => [
+            'regex' => 'URL format is invalid',
+        ],
+
+        'website_url' => [
+            'regex' => 'URL format is invalid',
+        ],
     ],
 
     /*
