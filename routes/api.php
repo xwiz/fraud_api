@@ -61,8 +61,11 @@ $api->version('v1', function ($api) use($controllers){
             // 
             $api->get('search', [ 'uses' => $controllers['fraud'].'@searchFraud']);
             $api->put('{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
-            $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
 
+            $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)
+            {
+                $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
+            });
 
             $api->get('categories', [ 'uses' => $controllers['home'].'@getFraudCategories']);
         });
