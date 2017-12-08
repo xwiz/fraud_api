@@ -26,6 +26,7 @@ $controllers =[
 'fraud' => 'App\Api\Controllers\FraudController',
 'home' => 'App\Api\Controllers\HomeController',
 'flag' => 'App\Api\Controllers\CommentController',
+'mail' => 'App\Api\Controllers\MailController',
 ];
 
 
@@ -53,6 +54,8 @@ $api->version('v1', function ($api) use($controllers){
         *
         * Fraud Case routes
         */
+        $api->post('/mail', [ 'uses' => $controllers['mail'].'@basicmail']);
+        
         $api->group(['prefix' => 'frauds'], function($api) use ($controllers)
         {
             $api->get('/', [ 'uses' => $controllers['fraud'].'@showFrauds']);

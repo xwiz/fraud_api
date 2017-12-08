@@ -3,6 +3,8 @@
 namespace App\Api\Controllers;
 
 use API;
+use Mail;
+use App\Mail\Contactus;
 use App\Api\Models\Contact;
 use Illuminate\Http\Request;
 use Dingo\Api\Routing\Helpers;
@@ -10,18 +12,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Response;
 use Dingo\Api\Exception\StoreResourceFailedException;
-
-// use JWTAuth;
-// use App\Api\Models\User;
-// use Illuminate\Http\Request;
-// use App\Api\Models\FraudCase;
-// use Dingo\Api\Routing\Helpers;
-// use App\Http\Controllers\Controller;
-// use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Support\Facades\Response;
-// use Dingo\Api\Exception\StoreResourceFailedException;
-
-
 
 
 class HomeController extends Controller
@@ -91,19 +81,26 @@ class HomeController extends Controller
         return ['fraudcategories' => $fraudcategory->all()];
     }
 
+
      /** 
     * POST /contact-us
     */
     function contact(Request $request, Contact $contact)
     {
-        $data = $request->all();  
+        $data = $request->all();
+
         $contact = new Contact();
+
         if(!$contact->validate($data,'create'))
         {
             throw new StoreResourceFailedException('Could not edit user. Errors: '. $contact->getErrorsInline());
         }
         $contact->fill($data);
         $contact->save();
+
+        Mail::to('info@secapay.com', 'noreply@fraudkoboko.com')->queue(new Contactus($contact));
+    
         return $contact;
+
     }
  }
