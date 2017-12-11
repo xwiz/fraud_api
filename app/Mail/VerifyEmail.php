@@ -6,23 +6,23 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Api\Models\Contact;
+use App\Api\Models\User;
 
-class Contactus extends Mailable
+class VerifyEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
 
-    protected $contact;
+    protected $user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Contact $contact)
+    public function __construct(User $user)
     {
         //
-        $this->contact = $contact;
+        $this->user = $user;
     }
 
     /**
@@ -31,7 +31,7 @@ class Contactus extends Mailable
      * @return $this
      */
     public function build()
-    {
-        return $this->from('info@secapay.com')->view('mail')->with(['name'=> $this->contact->name, 'email' => $this->contact->email, 'msg' => $this->contact->message]);
+    {   
+        return $this->from('info@secapay.com')->view('verifymail')->with(['name'=> $this->user->last_name, 'confirmation_code' => $this->user->confirmation_code]);
     }
 }

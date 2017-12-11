@@ -63,10 +63,10 @@ $api->version('v1', function ($api) use($controllers){
             
             // 
             $api->get('search', [ 'uses' => $controllers['fraud'].'@searchFraud']);
-            $api->put('{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
 
             $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)
             {
+                $api->put('{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
                 $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
             });
 
@@ -89,7 +89,8 @@ $api->version('v1', function ($api) use($controllers){
         $api->post('/authenticate', [ 'prefix' => 'auth', 'uses' => $controllers['auth'].'@authenticate']);
         $api->post('/recoverpassword', [ 'prefix' => 'users', 'uses' => $controllers['user'].'@recoverPassword']);
 
-        
+        //verify users registration email
+        $api->get('register/verify/{confirmationCode}', ['uses' => $controllers['user'].'@confirm']);
         /*
         | User routes
         |

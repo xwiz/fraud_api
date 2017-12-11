@@ -56,7 +56,10 @@ class AuthController extends Controller
     {
         try
         {
-            $credentials = $request->only('email', 'password');
+            $credentials = $request->only('email', 'password', 'confirmed');
+            //user email is confirmed
+            $credentials['confirmed'] = 1;
+
             $email = $credentials['email'];
             $user = $this->userModel->where(['email' => $email])->first(); 
 
@@ -67,7 +70,7 @@ class AuthController extends Controller
 
             if (!$token = JWTAuth::attempt($credentials)) 
             {
-                return response()->json(['error' => 'invalid_credentials'], 401);
+                return response()->json(['error' => 'Invalid_credentials'], 401);
             }
         } 
         catch (JWTException $e)

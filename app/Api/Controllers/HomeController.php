@@ -93,7 +93,7 @@ class HomeController extends Controller
 
         if(!$contact->validate($data,'create'))
         {
-            throw new StoreResourceFailedException('Could not edit user. Errors: '. $contact->getErrorsInline());
+            throw new StoreResourceFailedException('Could not send message. Errors: '. $contact->getErrorsInline());
         }
         $contact->fill($data);
         $contact->save();

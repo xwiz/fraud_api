@@ -3,7 +3,9 @@
 namespace App\Api\Controllers;
 
 use API;
+use Mail;
 use JWTAuth;
+use App\Mail\VerifyEmail;
 use App\Api\Models\User;
 use Illuminate\Http\Request;
 use App\Api\Models\FraudCase;
@@ -71,8 +73,6 @@ class UserController extends Controller
     */
     public function userFraud(Request $request,User $user, FraudCase $fraudCase, $id)
     {
-    //     $this->model = $this->model::find($id);
-    //     $counted = FraudCase::where('user_id', $id)->count();
         return FraudCase::where('user_id', $id)->orderBy('id', 'desc')->get();
     }
 
@@ -90,20 +90,52 @@ class UserController extends Controller
     public function storeUser (Request $request, User $user)
     {
         $data = $request->except('_token');
+
+        $mailed = $data['email'];
+
+        $confirmation_code = str_random(25);
         
         if(!$this->model->validate($data,'create'))
         {
             return Response::make(['error' => $this->model->getErrors()], '422');        
         }
         $data['password'] = bcrypt($data['password']);
+        $data['confirmation_code'] = $confirmation_code;
+
         $this->model->fill($data);
+        
+        Mail::to($mailed, 'noreply@fraudkoboko.com')->send(new VerifyEmail($this->model));
+        
         $this->model->save();
-        return response()->json([
-            'message' => 'New User created successfully',
-            'user' => $this->model
-            ]);
     }
 
+
+    /** 
+    * Verify user email.
+    * GET register/verify/{confirmationCode}
+    *
+    * @param $confirmationCode
+    * @return Response
+    */
+    public function confirm($confirmation_code)
+    {
+        if( ! $confirmation_code)
+        {
+            throw new InvalidConfirmationCodeException;
+        }
+
+        $user = User::where('confirmation_code', $confirmation_code)->first();
+
+        if ( ! $user)
+        {
+            throw new InvalidConfirmationCodeException;
+        }
+
+        $user->confirmed = 1;
+        $user->confirmation_code = null;
+        $user->save();
+         return 'Email verified Successfully. Go to Login page to continue';
+    }
 
     /** 
     * Update the specified resource in storage.
