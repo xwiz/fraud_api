@@ -46,7 +46,7 @@ class BaseModel extends Model
      * Exclude from transforms
      * @var array
      */
-    protected $excludeTransforms = ['updated_at', 'created_at', 'deleted_at', 'relevance'];
+    protected $excludeTransforms = ['updated_at', 'deleted_at', 'relevance'];
 
 
     /**

@@ -71,6 +71,10 @@ class FraudCase extends BaseModel
         'create4' => [
             'item_name' => 'max:150',
         ],
+
+
+        'update' => [],
+
     ];
 
 

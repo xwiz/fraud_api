@@ -64,10 +64,11 @@ $api->version('v1', function ($api) use($controllers){
             // 
             $api->get('search', [ 'uses' => $controllers['fraud'].'@searchFraud']);
 
+
             $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)
             {
-                $api->put('{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
                 $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
+                $api->post('/edit/{fraud}', ['uses' =>  $controllers['fraud'] .'@updateFraud']);
             });
 
             $api->get('categories', [ 'uses' => $controllers['home'].'@getFraudCategories']);

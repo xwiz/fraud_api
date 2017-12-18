@@ -17,9 +17,12 @@ class FraudAccount extends BaseModel
     public $rules = [
         'create' => [
             'account_no' => 'digits:10',
-            'account_name' => 'alpha_dash|max:50',
+            'account_name' => 'max:50',
         ],
-        'update' => [],
+        'update' => [
+            'account_no' => 'digits:10',
+            'account_name' => 'max:50',
+        ],
     ];
 
     /**
