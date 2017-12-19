@@ -25,7 +25,7 @@ $controllers =[
 'user' => 'App\Api\Controllers\UserController',
 'fraud' => 'App\Api\Controllers\FraudController',
 'home' => 'App\Api\Controllers\HomeController',
-'flag' => 'App\Api\Controllers\CommentController',
+'comment' => 'App\Api\Controllers\CommentController',
 'mail' => 'App\Api\Controllers\MailController',
 ];
 
@@ -82,7 +82,7 @@ $api->version('v1', function ($api) use($controllers){
         $api->get('/itemtypes', [ 'uses' => $controllers['home'].'@getItemTypes']);
         $api->get('/severities', [ 'uses' => $controllers['home'].'@getSeverities']);
 
-        $api->post('/comment', ['uses' => $controllers['flag'].'@flagFraud']);
+        $api->post('/comment', ['uses' => $controllers['comment'].'@flagFraud']);
         
         $api->get('/fraud/{fraud}', ['uses' => $controllers['fraud'].'@fraud']);
         $api->post('/', [ 'prefix' => 'users','uses' => $controllers['user'].'@storeUser']);

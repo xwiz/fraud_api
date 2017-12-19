@@ -20,6 +20,7 @@
 <li><a href="#basic-authentication">Basic Authentication</a></li>
 <li><a href="#user-features">User Features</a></li>
 <li><a href="#create-new-user">Create New User</a></li>
+<li><a href="#user-confirmation">User Confirmation</a></li>
 <li><a href="#retrieve-user-information">Retrieve User Information</a></li>
 <li><a href="#retrieve-user-all-reported-cases">Retrieve User All Reported Cases</a></li>
 <li><a href="#update-user-information">Update User Information</a></li>
@@ -107,7 +108,6 @@ Response
         Http code:  200
         [
             data : [
-                messsage:   New User created successfully
                 {user}...
             ]
         ]
@@ -116,6 +116,24 @@ Response
             [
                 message : Could not create User. Errors...
             ]</code></pre>
+<h3 id="user-confirmation">User Confirmation</h3>
+<pre><code>Endpoint :                  /register/verify/{confirmationCode}
+Http method :               get
+
+Body : 
+    confirmationCode:       string
+    
+Response
+    Successful
+        Http code:  200
+        [
+            {user}
+        ]
+    Error
+        Http code: 422
+        [
+            message : Invalid confirmation code
+        ]</code></pre>
 <h3 id="retrieve-user-information">Retrieve User Information</h3>
 <pre><code>Endpoint :      /users/me
 Http method :   get
@@ -229,8 +247,8 @@ Response
                 message : Could not create FraudCase. Errors...
             ]</code></pre>
 <h3 id="update-fraudcase">Update FraudCase</h3>
-<pre><code>Endpoint:      /frauds/{fraudId}
-Http method:    put
+<pre><code>Endpoint:      /frauds/edit/{fraudId}
+Http method:    post
 
 Body : 
     scammer_name:           string

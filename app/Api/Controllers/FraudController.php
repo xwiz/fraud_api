@@ -296,6 +296,7 @@ class FraudController extends Controller
             $websites = json_decode($data['websiteData'], true);
             foreach($websites as $website)
             {
+                \Log::info($website);
                 if(!$this->fraudWebsiteModel->validate($website, 'update'))
                 {
                     throw new StoreResourceFailedException('Could not store fraud website. '. $this->fraudWebsiteModel->getErrorsInLine());

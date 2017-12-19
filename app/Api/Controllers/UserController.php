@@ -107,6 +107,7 @@ class UserController extends Controller
         Mail::to($mailed, 'noreply@fraudkoboko.com')->send(new VerifyEmail($this->model));
         
         $this->model->save();
+        return $this->model;
     }
 
 
@@ -134,7 +135,7 @@ class UserController extends Controller
         $user->confirmed = 1;
         $user->confirmation_code = null;
         $user->save();
-         return 'Email verified Successfully. Go to Login page to continue';
+        return $this->model;
     }
 
     /** 

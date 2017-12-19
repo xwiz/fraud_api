@@ -82,7 +82,6 @@ Functionalities to create, delete, retrieve or modify user information through t
 			Http code:	200
 			[
 				data : [
-            		messsage:	New User created successfully
 					{user}...
 				]
 			]
@@ -91,6 +90,27 @@ Functionalities to create, delete, retrieve or modify user information through t
 				[
 					message : Could not create User. Errors...
 				]
+
+### User Confirmation
+
+	Endpoint : 					/register/verify/{confirmationCode}
+	Http method :				get
+
+	Body : 
+		confirmationCode:		string
+		
+	Response
+		Successful
+			Http code:	200
+			[
+				{user}
+			]
+		Error
+	        Http code: 422
+	        [
+	            message : Invalid confirmation code
+	        ]
+
 
 
 ### Retrieve User Information
@@ -220,8 +240,8 @@ Functionalities to create, delete, retrieve or modify users reported case throug
 
 ### Update FraudCase
 
-    Endpoint:      /frauds/{fraudId}
-    Http method:    put
+    Endpoint:      /frauds/edit/{fraudId}
+    Http method:    post
     
     Body : 
 		scammer_name:			string
