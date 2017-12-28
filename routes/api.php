@@ -23,10 +23,11 @@ $api = app('Dingo\Api\Routing\Router');
 $controllers =[
 'auth' => 'App\Api\Controllers\AuthController',
 'user' => 'App\Api\Controllers\UserController',
-'fraud' => 'App\Api\Controllers\FraudController',
 'home' => 'App\Api\Controllers\HomeController',
-'comment' => 'App\Api\Controllers\CommentController',
 'mail' => 'App\Api\Controllers\MailController',
+'fraud' => 'App\Api\Controllers\FraudController',
+'comment' => 'App\Api\Controllers\CommentController',
+'password' => 'App\Api\Controllers\PasswordResetController',
 ];
 
 
@@ -64,7 +65,7 @@ $api->version('v1', function ($api) use($controllers){
             // 
             $api->get('search', [ 'uses' => $controllers['fraud'].'@searchFraud']);
 
-
+            //protected API routes with JWT (must be logged in)
             $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)
             {
                 $api->delete('{fraud}', [ 'uses' => $controllers['fraud'].'@deleteFraud']);
@@ -88,14 +89,17 @@ $api->version('v1', function ($api) use($controllers){
         $api->post('/', [ 'prefix' => 'users','uses' => $controllers['user'].'@storeUser']);
         $api->get('/user/{user}', [ 'prefix' => 'frauds', 'uses' => $controllers['user'].'@userFraud']);
         $api->post('/authenticate', [ 'prefix' => 'auth', 'uses' => $controllers['auth'].'@authenticate']);
-        $api->post('/recoverpassword', [ 'prefix' => 'users', 'uses' => $controllers['user'].'@recoverPassword']);
+
+        //password reset routes
+        $api->post('password/email', ['uses' => $controllers['password'].'@sendResetLinkEmail']);
+        $api->post('password/reset', ['uses' => $controllers['password'].'@reset']);
 
         //verify users registration email
         $api->get('register/verify/{confirmationCode}', ['uses' => $controllers['user'].'@confirm']);
         /*
         | User routes
         |
-        | Protected Routes
+        | protected API routes with JWT (must be logged in)
         */
         $api->group(['middleware' => 'jwt.auth'], function($api) use ($controllers)
         {

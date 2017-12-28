@@ -2,13 +2,13 @@
 
 namespace App\Api\Controllers;
 
+use Log;
 use API;
+use File;
 use Image;
 use JWTAUth;
-use Validator;
 use Storage;
-use File;
-use Log;
+use Validator;
 use App\Api\Models\User;
 use Illuminate\Http\Request;
 use App\Api\Models\FraudCase;
@@ -374,7 +374,7 @@ class FraudController extends Controller
     public function searchFraud(Request $request)
     {
         $query = $request->get('keyword');
-        return FraudCase::search($query)->orderBy('id', 'desc')->get();
+        return FraudCase::search($query)->groupBy('id')->orderBy('id', 'desc')->get();
     }
 
     /**

@@ -48,8 +48,8 @@ class UserController extends Controller
      * @param User $user
      * @param FraudCase $fraudCase
      */
-    public function __construct(User $user, FraudCase $fraudCase)
-    {
+     public function __construct(User $user, FraudCase $fraudCase)
+     {
         $this->model = $user;
         $this->fraudCaseModel = $fraudCase;
     }
@@ -91,7 +91,7 @@ class UserController extends Controller
     {
         $data = $request->except('_token');
 
-        $mailed = $data['email'];
+        $email = $data['email'];
 
         $confirmation_code = str_random(25);
         
@@ -102,14 +102,19 @@ class UserController extends Controller
         $data['password'] = bcrypt($data['password']);
         $data['confirmation_code'] = $confirmation_code;
 
+         
         $this->model->fill($data);
-        
-        Mail::to($mailed, 'noreply@fraudkoboko.com')->send(new VerifyEmail($this->model));
-        
+        $confirmation_code = $data['confirmation_code'];
+        $name = $data['last_name'];
+
+        Mail::send('verifymail', compact('name', 'confirmation_code'), function ($mail) use ($email) {
+            $mail->to($email)
+            ->from('info@secapay.com')
+            ->subject('Verify Registration Email');
+        });
         $this->model->save();
         return $this->model;
     }
-
 
     /** 
     * Verify user email.
@@ -122,20 +127,20 @@ class UserController extends Controller
     {
         if( ! $confirmation_code)
         {
-            throw new InvalidConfirmationCodeException;
+            return Response::make(['error' => "No Confirmation Code Sent"], '422'); 
         }
 
         $user = User::where('confirmation_code', $confirmation_code)->first();
 
         if ( ! $user)
         {
-            throw new InvalidConfirmationCodeException;
+            return Response::make(['error' => "Email Already validated or Invalid Confirmation Code"], '422'); 
         }
 
         $user->confirmed = 1;
         $user->confirmation_code = null;
         $user->save();
-        return $this->model;
+        return "Email Verification successful, Go to Login page to continue...";
     }
 
     /** 
@@ -162,7 +167,6 @@ class UserController extends Controller
             ]);
     }
 
-   
     /**
     * Log user in with generated token
     * POST /users/me

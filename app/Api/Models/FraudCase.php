@@ -18,15 +18,15 @@ class FraudCase extends BaseModel
      */
     protected $searchable = [
     'columns' => [
-        'users.first_name' =>9,
-        'users.last_name' => 9,
-        'fraud_emails.email' => 9,
-        'fraud_cases.scammer_name' => 10,
-        'fraud_accounts.account_no' => 10,
-        'fraud_mobiles.phone_number' => 10,
-        'fraud_websites.website_url' => 10,
-        'fraud_accounts.account_name' => 10,
-        'fraud_cases.scammer_real_name' => 10,
+        'users.first_name' =>8,
+        'users.last_name' => 8,
+        'fraud_emails.email' => 8,
+        'fraud_cases.scammer_name' => 8,
+        'fraud_accounts.account_no' => 8,
+        'fraud_mobiles.phone_number' => 8,
+        'fraud_websites.website_url' => 8,
+        'fraud_accounts.account_name' => 8,
+        'fraud_cases.scammer_real_name' => 8,
     ],
     'joins' => [
         'users' => ['fraud_cases.user_id', 'users.id'],
