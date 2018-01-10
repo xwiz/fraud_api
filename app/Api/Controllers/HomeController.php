@@ -102,7 +102,7 @@ class HomeController extends Controller
         $contact->fill($data);
         $contact->save();
 
-        Mail::to('info@secapay.com', 'noreply@fraudkoboko.com')->queue(new Contactus($contact));
+        Mail::to('info@fraudkoboko.com', 'Fraud Koboko', 'noreply@fraudkoboko.com')->queue(new Contactus($contact));
     
         return $contact;
 

@@ -32,6 +32,6 @@ class Contactus extends Mailable
      */
     public function build()
     {
-        return $this->from('info@secapay.com')->view('mail')->with(['name'=> $this->contact->name, 'email' => $this->contact->email, 'msg' => $this->contact->message]);
+        return $this->from('info@fraudkoboko.com', 'Fraud Koboko')->view('mail')->with(['name'=> $this->contact->name, 'email' => $this->contact->email, 'msg' => $this->contact->message]);
     }
 }

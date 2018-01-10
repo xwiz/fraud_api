@@ -42,14 +42,14 @@ class UserController extends Controller
     private $fraudCase;
 
 
-     /**
+    /**
      * Class constructor
      *
      * @param User $user
      * @param FraudCase $fraudCase
      */
-     public function __construct(User $user, FraudCase $fraudCase)
-     {
+    public function __construct(User $user, FraudCase $fraudCase)
+    {
         $this->model = $user;
         $this->fraudCaseModel = $fraudCase;
     }
@@ -94,7 +94,7 @@ class UserController extends Controller
         $email = $data['email'];
 
         $confirmation_code = str_random(25);
-        
+
         if(!$this->model->validate($data,'create'))
         {
             return Response::make(['error' => $this->model->getErrors()], '422');        
@@ -102,15 +102,15 @@ class UserController extends Controller
         $data['password'] = bcrypt($data['password']);
         $data['confirmation_code'] = $confirmation_code;
 
-         
+
         $this->model->fill($data);
         $confirmation_code = $data['confirmation_code'];
         $name = $data['last_name'];
 
         Mail::send('verifymail', compact('name', 'confirmation_code'), function ($mail) use ($email) {
             $mail->to($email)
-            ->from('info@secapay.com')
-            ->subject('Verify Registration Email');
+                ->from('info@fraudkoboko.com', 'Fraud Koboko')
+                ->subject('Verify Registration Email');
         });
         $this->model->save();
         return $this->model;
@@ -164,7 +164,7 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Update was Successful',
             'user' => $this->model
-            ]);
+        ]);
     }
 
     /**
@@ -193,7 +193,7 @@ class UserController extends Controller
         {
             return response()->json(['token_absent'], $e->getStatusCode());
         }
-        
+
         // the token is valid and we have found the user via the sub claim
         return $user;
     }

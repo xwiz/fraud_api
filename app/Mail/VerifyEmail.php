@@ -32,6 +32,6 @@ class VerifyEmail extends Mailable
      */
     public function build()
     {   
-        return $this->from('info@secapay.com')->view('verifymail')->with(['name'=> $this->user->last_name, 'confirmation_code' => $this->user->confirmation_code]);
+        return $this->from('info@fraudkoboko.com', 'Fraud Koboko')->view('verifymail')->with(['name'=> $this->user->last_name, 'confirmation_code' => $this->user->confirmation_code]);
     }
 }

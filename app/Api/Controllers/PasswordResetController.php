@@ -30,7 +30,7 @@ class PasswordResetController extends Controller
 		$token = $reset->token;
 		Mail::send('resetpassword', compact('email', 'token'), function ($mail) use ($email) {
             $mail->to($email)
-            ->from('info@secapay.com')
+            ->from('info@fraudkoboko.com', 'Fraud Koboko')
             ->subject('Your Password reset link');
         });
         
